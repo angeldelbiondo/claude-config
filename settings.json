@@ -1,0 +1,16 @@
+{
+  "env": {
+    "OBSIDIAN_VAULT_PATH": "C:\\Users\\angel\\Documents\\Obsidian Vault"
+  },
+  "hooks": {},
+  "extraKnownMarketplaces": {
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
+    }
+  },
+  "autoUpdatesChannel": "latest",
+  "theme": "dark"
+}

@@ -1,0 +1,23 @@
+# Credenciales — NUNCA commitear
+.credentials.json
+mcp-needs-auth-cache.json
+
+# Datos de sesión — efímeros, no útiles para restaurar
+projects/
+tasks/
+telemetry/
+
+# Skills — son repos de GitHub, se restauran con restore.ps1
+skills/
+
+# Plugins del marketplace — se reinstalan desde la UI de Claude Code
+plugins/
+
+# Generados automáticamente por Claude Code
+commands/
+cache/
+backups/
+sessions/
+shell-snapshots/
+history.jsonl
+.last-cleanup
