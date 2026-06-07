@@ -122,6 +122,29 @@ Al usar una nota del vault para responder → siempre mostrar el nombre del arch
 
 ---
 
+## Market research proactivo — `/marketing-research`
+
+**Invocar `/marketing-research` automáticamente** cuando el pedido involucre investigación de negocio, mercado o competidores. No esperar que Angel lo pida.
+
+### Cuándo activarlo
+- Angel pregunta sobre el mercado de máquinas expendedoras (Panamá, LATAM, o en general)
+- Angel pide analizar competidores, entender al cliente ideal (ICP), o trabajar el posicionamiento
+- Angel quiere mejorar el copy de la landing, el wizard, o las propuestas de valor de VendingHubPTY
+- Angel dice "investigá", "research", "analizá el mercado", "quién es mi cliente", "cómo me diferencio", "qué vende más", "qué ubicaciones funcionan"
+- Se está tomando una decisión de producto que depende de datos de mercado (qué máquinas incluir en el catálogo, qué preguntar en el wizard, qué parámetros usar en el ROI calculator)
+
+### Cuándo NO activarlo
+- Trabajo puramente técnico (código, bugs, infra, DB)
+- Small talk o preguntas de herramientas
+- Preguntas de UX/UI sin componente de negocio (para eso está `/design-research`)
+
+### Cómo ejecutarlo
+1. Invocar `/marketing-research` — arranca con la entrevista de intake
+2. Usar los findings para actualizar directamente el código/datos del proyecto si corresponde
+3. Guardar el output en el vault con `/obsidian-save`
+
+---
+
 ## Skills disponibles (resumen)
 
 Angel NO necesita memorizarlas — vos inferís cuál usar según contexto. Mencionar el comando en la respuesta para que las aprenda con el tiempo.
@@ -136,3 +159,4 @@ Angel NO necesita memorizarlas — vos inferís cuál usar según contexto. Menc
 | Identidad | `/obsidian-world` (carga SOUL + CRITICAL_FACTS + index al inicio) |
 | Research externa | `/research`, `/research-deep`, `/youtube`, `/x-read`, `/x-pulse` |
 | Diseño | `/design-research` — activado automáticamente antes de proponer cualquier UI |
+| Negocio | `/marketing-research` — activado automáticamente ante cualquier research de mercado/competidores/posicionamiento |
