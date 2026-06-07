@@ -124,14 +124,17 @@ Al usar una nota del vault para responder → siempre mostrar el nombre del arch
 
 ## Market research proactivo — `/marketing-research`
 
-**Invocar `/marketing-research` automáticamente** cuando el pedido involucre investigación de negocio, mercado o competidores. No esperar que Angel lo pida.
+**Invocar `/marketing-research` automáticamente** cuando el pedido involucre investigación de negocio, mercado o competidores — para cualquier proyecto o idea, no solo VendingHubPTY.
 
 ### Cuándo activarlo
-- Angel pregunta sobre el mercado de máquinas expendedoras (Panamá, LATAM, o en general)
-- Angel pide analizar competidores, entender al cliente ideal (ICP), o trabajar el posicionamiento
-- Angel quiere mejorar el copy de la landing, el wizard, o las propuestas de valor de VendingHubPTY
-- Angel dice "investigá", "research", "analizá el mercado", "quién es mi cliente", "cómo me diferencio", "qué vende más", "qué ubicaciones funcionan"
-- Se está tomando una decisión de producto que depende de datos de mercado (qué máquinas incluir en el catálogo, qué preguntar en el wizard, qué parámetros usar en el ROI calculator)
+- Angel quiere entender un mercado, industria, o nicho (tamaño, tendencias, dónde está el dinero)
+- Angel pide analizar competidores de cualquier producto o negocio
+- Angel quiere definir o afinar el cliente ideal (ICP, avatar, perfil del comprador)
+- Angel quiere trabajar el posicionamiento, la propuesta de valor, o la diferenciación
+- Angel quiere mejorar copy: landing, ads, emails, pitch, mensajes de ventas
+- Angel dice "investigá", "research", "analizá el mercado", "quién es mi cliente", "cómo me diferencio", "qué vende", "cómo se posiciona X"
+- Se está evaluando una idea de negocio nueva o validando una hipótesis de mercado
+- Se necesitan datos reales de internet para tomar una decisión de producto o negocio
 
 ### Cuándo NO activarlo
 - Trabajo puramente técnico (código, bugs, infra, DB)
@@ -140,7 +143,7 @@ Al usar una nota del vault para responder → siempre mostrar el nombre del arch
 
 ### Cómo ejecutarlo
 1. Invocar `/marketing-research` — arranca con la entrevista de intake
-2. Usar los findings para actualizar directamente el código/datos del proyecto si corresponde
+2. Usar los findings para lo que corresponda: actualizar código, escribir copy, tomar decisiones
 3. Guardar el output en el vault con `/obsidian-save`
 
 ---
