@@ -21,3 +21,7 @@ sessions/
 shell-snapshots/
 history.jsonl
 .last-cleanup
+
+# Estado efímero de sesión
+plans/
+.ponytail-active

@@ -2,14 +2,38 @@
   "env": {
     "OBSIDIAN_VAULT_PATH": "C:\\Users\\angel\\Documents\\Obsidian Vault"
   },
-  "hooks": {},
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "& \"C:\\Users\\angel\\.claude\\hooks\\ponytail-precommit.ps1\"",
+            "shell": "powershell",
+            "timeout": 15,
+            "statusMessage": "Ponytail pre-commit check"
+          }
+        ]
+      }
+    ]
+  },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
       "source": {
         "source": "github",
         "repo": "anthropics/claude-plugins-official"
       }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
     }
+  },
+  "enabledPlugins": {
+    "ponytail@ponytail": true
   },
   "autoUpdatesChannel": "latest",
   "theme": "dark"

@@ -20,13 +20,19 @@ C:\Users\angel\Documents\Obsidian Vault\
 
 Operado por la skill [`obsidian-second-brain`](https://github.com/eugeniughelbur/obsidian-second-brain) instalada en `~/.claude/skills/obsidian-second-brain/`.
 
-### Al iniciar trabajo en cualquier sesión
+### REGLA DE INICIO — OBLIGATORIA, SIN EXCEPCIÓN
 
-1. **Leer `_CLAUDE.md` del vault** — contiene las reglas operativas específicas de este vault. Sus reglas tienen precedencia sobre las defaults de la skill.
-2. **Leer `SOUL.md`** + **`CRITICAL_FACTS.md`** — identidad de Angel y facts always-loaded (timezone, proyecto activo, etc.).
-3. **Leer `index.md`** cuando vayas a navegar el vault — es más rápido que buscar.
+**Antes de responder el PRIMER mensaje de cualquier sesión**, hacer esto en orden:
 
-Esto se hace solo una vez por sesión, no en cada mensaje.
+1. **Leer `CRITICAL_FACTS.md`** — estado actual de proyectos, feedback acumulado de Angel, qué hacer a continuación.
+2. **Leer `index.md`** — mapa de todo el vault.
+3. Si el mensaje toca VendingHubPTY → leer `wiki/projects/VendingHubPTY/VendingHubPTY.md` antes de responder.
+4. Si el mensaje es técnico → buscar primero en `wiki/concepts/`.
+5. **Confirmar en UNA línea** al inicio de la primera respuesta qué contexto cargaste. Ejemplo: *"Contexto: VendingHubPTY activo, investigación de mercado disponible."*
+
+**Por qué es obligatorio:** el vault es la memoria externa de Angel. Si no lo leés al arrancar, respondés ignorando todo lo que él ya sabe y ya decidió — eso invalida el sistema entero.
+
+**Una sola vez por sesión** — no repetir en cada mensaje.
 
 ---
 
