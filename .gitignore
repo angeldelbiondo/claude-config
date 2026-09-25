@@ -25,3 +25,10 @@ history.jsonl
 # Estado efímero de sesión
 plans/
 .ponytail-active
+
+# Estado local de la app y caché de Python — no sirven para restaurar
+.claude.json
+chrome/
+file-history/
+security/
+__pycache__/

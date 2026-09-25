@@ -1,171 +1,81 @@
 # Instrucciones globales — Angel
 
-## Idioma y tono
+Aplican a todos los proyectos. Cada regla lleva su porqué en una línea. Los incidentes completos que las originaron están en el vault, en `wiki/decisions/ADR-2026-09-23 — CLAUDE.md global normalizado.md`. Leerlo solo si una regla no se entiende o parece no aplicar.
 
-- Responder en **español argentino** (vos, no tú).
-- Directo, sin relleno, sin "¡Excelente pregunta!" ni preámbulos corporativos.
-- Tablas y bullets antes que párrafos largos.
-- Code blocks para cualquier cosa técnica.
-- No agregar firma "Co-Authored-By: Claude" en commits de git.
+## Comunicación
 
----
+- Español neutro (tú). También en el código y la UI de sus proyectos, con léxico panameño.
+- Directo, sin preámbulos ni relleno.
+- Tablas y bullets antes que párrafos; code blocks para lo técnico.
+- Al usar una skill, nombrar el comando (`/obsidian-save`, etc.) para que Angel las vaya aprendiendo.
 
-## Sistema de conocimiento personal — Obsidian Vault
+## Git y configuración
 
-Angel tiene un vault de Obsidian con estructura **wiki-style (LLM-first)** en:
+- Commits de git sin la línea "Co-Authored-By: Claude".
+- El `git commit` va en una llamada de Bash aparte: si el hook de ponytail lo bloquea, bloquea la llamada entera y no corre nada de lo encadenado.
+- Antes de tocar `~/.claude/settings.json`, mostrar qué cambia y por qué: una configuración ya rompió las respuestas una vez.
 
-```
-C:\Users\angel\Documents\Obsidian Vault\
-```
+## Vault de Obsidian: la memoria externa de Angel
 
-Operado por la skill [`obsidian-second-brain`](https://github.com/eugeniughelbur/obsidian-second-brain) instalada en `~/.claude/skills/obsidian-second-brain/`.
+Ruta: `C:\Users\angel\Documents\Obsidian Vault\`, operado con la skill `obsidian-second-brain`. Manual de escritura (carpetas, esquemas, nombres): `_CLAUDE.md` del vault.
 
-### REGLA DE INICIO — OBLIGATORIA, SIN EXCEPCIÓN
+### Qué se lee y cuándo (de lo general a lo específico)
 
-**Antes de responder el PRIMER mensaje de cualquier sesión**, hacer esto en orden:
+1. **Siempre:** un hook de SessionStart pega `CRITICAL_FACTS.md` al arrancar, al retomar una sesión, después de `/clear` y después de cada compactación. Si no ves ese bloque en el contexto, leer el archivo a mano.
+2. **En cada mensaje (autoconsulta):** un hook de UserPromptSubmit busca en el vault y agrega un bloque `[autoconsulta del vault]` con las notas candidatas. Es el "déjame ver si tengo apuntes de esto": abrir las que apliquen antes de responder e ignorar las demás. El buscador es por palabras: si aparece una nota no quiere decir que sirva, y si no aparece nada no quiere decir que no haya notas.
+3. **Si la autoconsulta no alcanza** (preguntas técnicas o temas que Angel ya trabajó): `index.md` → la nota que corresponda, y si no, Grep/Glob sobre `wiki/` y `raw/`. **Leer** lo encontrado antes de proponer: encontrar una nota no es leerla. Si no hay nada, responder desde conocimiento general sin mencionar la búsqueda.
+4. **Al retomar un proyecto:** su nota de conclusiones → `RUTA` → `ANTES DE TRABAJAR`. En Maria están en `wiki/projects/Trading Algorítmico/`. Antes de proponer un camino nuevo, fijarse si ya está escrito ahí.
 
-1. **Leer `CRITICAL_FACTS.md`** — estado actual de proyectos, feedback acumulado de Angel, qué hacer a continuación.
-2. **Leer `index.md`** — mapa de todo el vault.
-3. Si el mensaje toca VendingHubPTY → leer `wiki/projects/VendingHubPTY/VendingHubPTY.md` antes de responder.
-4. Si el mensaje es técnico → buscar primero en `wiki/concepts/`.
-5. **Confirmar en UNA línea** al inicio de la primera respuesta qué contexto cargaste. Ejemplo: *"Contexto: VendingHubPTY activo, investigación de mercado disponible."*
+- En la primera respuesta de la sesión, una línea diciendo qué contexto se cargó.
+- No consultar el vault para small talk ni comandos del sistema.
+- Al responder con una nota del vault, citarla al final: `(nombre-del-archivo)`.
 
-**Por qué es obligatorio:** el vault es la memoria externa de Angel. Si no lo leés al arrancar, respondés ignorando todo lo que él ya sabe y ya decidió — eso invalida el sistema entero.
+### Mantenerlo vivo (escribir no es usar: el ciclo se cierra leyendo)
 
-**Una sola vez por sesión** — no repetir en cada mensaje.
+- `ANTES DE TRABAJAR` es la única lista de pendientes de cada proyecto. Los "próximos pasos" de otras notas son historia. Al cerrar un bloque de trabajo, mover lo resuelto a ✅ o 💀.
+- `RUTA` tiene la secuencia: cada fase con un criterio de salida verificable. Al cerrar un bloque, actualizar la fase. Si lista algo ya cerrado o una fase lleva semanas quieta, arreglarla o borrarla.
+- "Guardá", "salvá", "no quiero perder esto" → `/obsidian-save`. Si la conversación produjo una decisión, un aprendizaje o un concepto nuevo, proponerlo antes de cerrar.
 
----
+### Al escribir en el vault
 
-### Cuándo consultar el vault (proactivo, sin que Angel lo pida)
+- Antes de la primera escritura de la sesión, leer `_CLAUDE.md` del vault: formato AI-first, carpetas, tipos de nota y nombres.
+- Nunca `:` en un nombre de archivo. En Windows crea un stream oculto: la nota queda en 0 bytes, invisible para Obsidian, y releerla por la misma ruta no lo detecta. Verificar que el `.md` aparezca en la carpeta y pese más de 0.
+- Releer después de escribir. Si Obsidian tiene la nota abierta, pisa en silencio lo escrito desde afuera; un "ok" del script no prueba nada.
 
-Antes de responder preguntas técnicas (HTML/CSS/JS, Python, frameworks, herramientas, animaciones, diseño, IA/ML, arquitectura, testing):
-1. Leer `index.md` para encontrar páginas relevantes
-2. Si no aparece, usar Grep/Glob sobre `wiki/` y `raw/`
-3. Si hay notas → usarlas como base de la respuesta y **citar el filename**: `(2026-04-27-gsap-awwwards-tutorial)`
-4. Si no hay → responder desde conocimiento general, sin mencionar la búsqueda
+## Verificar antes de reportar
 
-**NO consultar para:** small talk, comandos del sistema, gestión del vault.
+El patrón a evitar: reportar un resultado con entusiasmo y encontrar la falla en el turno siguiente.
 
----
+- Correr la verificación en el mismo turno y pegar la salida. Si el proyecto tiene un chequeo agrupado (en Maria, `auditar.py`), usarlo.
+- Si el espacio completo es computable, no muestrear.
 
-### Ingestión automática
+### Al analizar datos y números
 
-**Cuando Angel manda una URL de YouTube** (youtube.com / youtu.be), sola o con texto tipo "guardá esto", "aprendé esto", "esto sirve":
+- Antes de usar una correlación como prueba, confirmar que no sea mecánica: dos medidas del mismo estadístico correlacionan solas. Probarlo con datos donde el efecto no existe.
+- Reportar la métrica de lo que se usaría de verdad, no el número más impresionante del fenómeno crudo.
+- Cortar las tendencias en ventanas. Si el signo o la magnitud cambian al mover el punto de arranque, la tendencia es de un subperiodo: decir cuál.
+- Comparar ventanas iguales, nunca un promedio de N meses contra un valor instantáneo. "Hoy" se mide con la ventana más reciente; el año describe el año.
+- Preferir "¿cuánto haría falta para X?" a "¿cuánto va a ser X?": un umbral no depende de un pronóstico.
+- La vara de comparación tiene que ser de la misma categoría que lo medido, y se valida con Angel antes de sacar conclusiones con ella.
+- Separar calidad (%, Sharpe: no dependen del capital) de escala (dólares). No concluir "no sirve" porque da pocos dólares sobre un capital chico.
+- Corregir el Sharpe de una serie autocorrelacionada (Lo, 2002) antes de reportarlo. Un Sharpe mayor a 3 en un backtest es señal de bug.
 
-→ **Default:** invocar `/youtube` de la skill (usa `youtube-transcript-api`, gratis, rápido, sin descarga de audio).
+## Agentes y orquestación
 
-→ **Fallback** si el video no tiene captions:
-```bash
-python "C:\Users\angel\Documents\Obsidian Vault\scripts\ingest_youtube.py" "<URL>"
-```
-(usa yt-dlp + faster-whisper, lento pero funciona con cualquier video).
+- Un panel o debate de agentes hereda las premisas de quien lo arma. Antes de lanzarlo, escribir las premisas y pedirle a un agente que ataque las premisas, no solo las conclusiones.
+- Para investigar: 3 agentes como máximo, y en secuencia si comparten una API gratis. Si se puede hacer en línea, en línea.
+- Si un `Workflow` muere, rescatar las transcripciones `agent-*.jsonl` antes de reintentar: reintentar igual quema lo mismo otra vez.
 
-Después: aplicar el flujo de `/obsidian-ingest` — analizar, distribuir a `wiki/concepts/`, `wiki/entities/`, `wiki/projects/` según corresponda. Guardar transcripción cruda en `raw/videos/YYYY-MM-DD — Title.md` (inmutable).
+## Ingesta de links
 
-**Cuando Angel manda URL de artículo web** → `/research` o `/obsidian-ingest` con WebFetch.
+- **YouTube:** `/obsidian-youtube` (transcripción). Si lo visual importa (UI, código en pantalla, diseño, animación), sumar frames con `claude-video-vision` (`video_info` → `video_analyze` → `video_watch`) a la misma nota. Sin captions: `python "C:\Users\angel\Documents\Obsidian Vault\scripts\ingest_youtube.py" "<URL>"`. No disparar `/watch-video` por una URL de YouTube: queda para archivos locales o si Angel lo pide.
+- **TikTok:** `yt-dlp` a una carpeta temporal → `video_info` → `video_analyze` → `video_watch` → nota en `Research/TikTok/YYYY-MM-DD — título.md` → borrar el video. Si muestra una herramienta que Angel puede usar ya, preguntarle si se aplica al proyecto activo.
+- **Artículo web:** `/obsidian-ingest` con WebFetch.
+- **X/Twitter:** `/obsidian-x-read` y `/obsidian-x-pulse` no funcionan: falta `XAI_API_KEY` y Angel decidió no pagar claves (no volver a ofrecerlo). Usar WebFetch/WebSearch y avisar.
+- `/obsidian-research` y `/obsidian-research-deep` dependen de la API de chat de Perplexity, que cierra el 2026-09-27.
+- El crudo va a `raw/videos/YYYY-MM-DD — Título.md` (inmutable); lo destilado, a `wiki/concepts/`, `wiki/entities/` o `wiki/projects/`.
 
-**Cuando Angel manda link de X/Twitter** → `/x-read [url]`.
+## Research previo automático
 
----
-
-### Auto-save de conversaciones
-
-Cuando Angel dice "guardá", "salvá", "no quiero perder esto", "guardá eso", o cualquier variación:
-→ ejecutar `/obsidian-save` (extrae aprendizajes y los distribuye a las notas correspondientes).
-
-**Proactivo:** si una conversación produce algo vault-worthy (decisión, learning, concepto nuevo) y Angel está por cerrar, proponer `/obsidian-save` antes.
-
----
-
-### AI-First Vault Rule (toda nota que escribas en el vault)
-
-Cada nota debe seguir `~/.claude/skills/obsidian-second-brain/references/ai-first-rules.md`:
-
-1. **`## For future Claude`** preamble (2-3 líneas) justo después del frontmatter
-2. **Frontmatter rico** con `date`, `type`, `tags`, `ai-first: true`
-3. **Recency markers** en claims externos: `(as of 2026-04, source.com)`
-4. **Sources verbatim** con URL inline
-5. **`[[wikilinks]]`** obligatorios para personas/proyectos/conceptos
-6. **Confidence levels** donde aplique: `stated | high | medium | speculation`
-
----
-
-### Cita de fuentes
-
-Al usar una nota del vault para responder → siempre mostrar el nombre del archivo (sin extensión) entre paréntesis al final:
-```
-(2026-04-27-gsap-awwwards-tutorial)
-(GSAP) ← para concepts
-```
-
----
-
-## Design research proactivo — `/design-research`
-
-**Antes de proponer cualquier UI/pantalla/componente visual**, ejecutar el flujo de `/design-research` automáticamente, sin que Angel lo pida. Esto incluye:
-
-### Cuándo activarlo (detectar por contexto del pedido)
-- Se está diseñando o construyendo una pantalla nueva (dashboard, formulario, landing, onboarding, lista, card, modal, etc.)
-- Angel pide "hacé el diseño de X", "cómo debería verse X", "construí la vista de X", "armá el layout de X"
-- Se está trabajando en un componente UI que va a ser visto por usuarios finales
-- Se detecta que el proyecto tiene una interfaz (por archivos .tsx, .vue, .html, .css, etc.) y el pedido es sobre algo visual
-- Angel adjunta un screenshot de algo que quiere mejorar o critiquear
-
-### Cuándo NO activarlo
-- Trabajo puramente de backend/lógica sin impacto visual
-- Refactor de código sin cambio de UI
-- Configuración, scripts, infraestructura
-- Small talk
-
-### Cómo ejecutarlo (100% silencioso)
-1. Hacer WebSearch sobre el tipo de UI + patrones que funcionan
-2. Usar eso como base para el diseño o código
-3. **Nunca mencionar fuentes, nunca anunciar que hiciste research, nunca explicar el proceso**
-4. Simplemente producir mejor output — código y diseño fundamentados sin comentarlo
-
-### Si la pantalla es para un proyecto conocido del vault
-→ Además de WebSearch, leer la nota del proyecto en `wiki/projects/` para entender el stack, roles y contexto antes de buscar referencias.
-
----
-
-## Market research proactivo — `/marketing-research`
-
-**Invocar `/marketing-research` automáticamente** cuando el pedido involucre investigación de negocio, mercado o competidores — para cualquier proyecto o idea, no solo VendingHubPTY.
-
-### Cuándo activarlo
-- Angel quiere entender un mercado, industria, o nicho (tamaño, tendencias, dónde está el dinero)
-- Angel pide analizar competidores de cualquier producto o negocio
-- Angel quiere definir o afinar el cliente ideal (ICP, avatar, perfil del comprador)
-- Angel quiere trabajar el posicionamiento, la propuesta de valor, o la diferenciación
-- Angel quiere mejorar copy: landing, ads, emails, pitch, mensajes de ventas
-- Angel dice "investigá", "research", "analizá el mercado", "quién es mi cliente", "cómo me diferencio", "qué vende", "cómo se posiciona X"
-- Se está evaluando una idea de negocio nueva o validando una hipótesis de mercado
-- Se necesitan datos reales de internet para tomar una decisión de producto o negocio
-
-### Cuándo NO activarlo
-- Trabajo puramente técnico (código, bugs, infra, DB)
-- Small talk o preguntas de herramientas
-- Preguntas de UX/UI sin componente de negocio (para eso está `/design-research`)
-
-### Cómo ejecutarlo
-1. Invocar `/marketing-research` — arranca con la entrevista de intake
-2. Usar los findings para lo que corresponda: actualizar código, escribir copy, tomar decisiones
-3. Guardar el output en el vault con `/obsidian-save`
-
----
-
-## Skills disponibles (resumen)
-
-Angel NO necesita memorizarlas — vos inferís cuál usar según contexto. Mencionar el comando en la respuesta para que las aprenda con el tiempo.
-
-| Categoría | Skills |
-|---|---|
-| Captura | `/obsidian-save`, `/obsidian-ingest`, `/obsidian-capture`, `/obsidian-daily` |
-| Búsqueda | `/obsidian-find`, `/obsidian-recap` |
-| Proyecto | `/obsidian-task`, `/obsidian-project`, `/obsidian-decide`, `/obsidian-board`, `/obsidian-person` |
-| Mantenimiento | `/obsidian-init`, `/obsidian-health`, `/obsidian-reconcile`, `/obsidian-synthesize` |
-| Pensamiento | `/obsidian-challenge`, `/obsidian-emerge`, `/obsidian-connect`, `/obsidian-graduate` |
-| Identidad | `/obsidian-world` (carga SOUL + CRITICAL_FACTS + index al inicio) |
-| Research externa | `/research`, `/research-deep`, `/youtube`, `/x-read`, `/x-pulse` |
-| Diseño | `/design-research` — activado automáticamente antes de proponer cualquier UI |
-| Negocio | `/marketing-research` — activado automáticamente ante cualquier research de mercado/competidores/posicionamiento |
+- **UI** (pantalla, componente, layout, crítica de un screenshot): correr `/design-research` antes de proponer, y leer la nota del proyecto en `wiki/projects/` si existe. Sin anunciar el research. No aplica a backend, refactor ni configuración.
+- **Negocio** (mercado, competidores, cliente ideal, posicionamiento, copy): `/marketing-research`, y guardar el resultado con `/obsidian-save`.

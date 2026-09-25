@@ -11,6 +11,8 @@ git clone https://github.com/eugeniughelbur/obsidian-second-brain "$skillsDir\ob
 
 Write-Host "Instalando marketing-research..."
 git clone https://github.com/ishwarjha/claude-marketing-research-skill "$skillsDir\marketing-research"
+# El repo trae el SKILL.md una carpeta más abajo y así Claude Code no lo carga (2026-09-23): subirlo un nivel
+git -C "$skillsDir\marketing-research" mv marketing-research/SKILL.md SKILL.md
 
 Write-Host ""
 Write-Host "Listo. Reinicia Claude Code para cargar los skills."
