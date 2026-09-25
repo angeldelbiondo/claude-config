@@ -1,0 +1,2 @@
+# Los patches se aplican byte a byte: si Windows les convierte los finales de línea, git apply falla
+*.patch -text

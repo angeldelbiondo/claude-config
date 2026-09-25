@@ -7,8 +7,12 @@ projects/
 tasks/
 telemetry/
 
-# Skills — son repos de GitHub, se restauran con restore.ps1
-skills/
+# Skills — las que vienen de GitHub se restauran con restore.ps1 (más su patch en skill-patches/).
+# Las que solo existen en esta máquina se versionan acá.
+skills/*
+!skills/design-dna/
+!skills/design-motion/
+!skills/reddit-arctic-shift/
 
 # Plugins del marketplace — se reinstalan desde la UI de Claude Code
 plugins/
