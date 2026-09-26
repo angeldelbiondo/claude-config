@@ -14,6 +14,7 @@ Aplican a todos los proyectos. Cada regla lleva su porqué en una línea. Los in
 - Commits de git sin la línea "Co-Authored-By: Claude".
 - El `git commit` va en una llamada de Bash aparte: si el hook de ponytail lo bloquea, bloquea la llamada entera y no corre nada de lo encadenado.
 - Antes de tocar `~/.claude/settings.json`, mostrar qué cambia y por qué: una configuración ya rompió las respuestas una vez.
+- Nunca modificar la configuración de red ni del sistema (DNS, proxy, variables `HTTP_PROXY`/`HTTPS_PROXY`, archivo `hosts`, firewall, adaptadores, `winhttp`, registro de Windows, servicios de Windows) sin mostrar antes el comando exacto y esperar la aprobación explícita de Angel: un fallo de DNS dejó a Claude Code sin conexión (`ECONNREFUSED` en el login) mientras el navegador funcionaba, y costó horas diagnosticarlo.
 
 ## Vault de Obsidian: la memoria externa de Angel
 
