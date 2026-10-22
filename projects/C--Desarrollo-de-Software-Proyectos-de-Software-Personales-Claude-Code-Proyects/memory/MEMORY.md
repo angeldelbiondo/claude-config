@@ -15,5 +15,6 @@
 - [Tópicos — dashboard ambiental](project_topicos_ambiental_dashboard.md) — Repo de Nico (air-quality-analytics-platform), Angel mejorando el .pbix que no hizo él; modelo estrella v_pbi_* documentado
 - [Herramientas propias antes que pagar](feedback_herramientas_propias_primero.md) — Antes de proponer VPS/claves pagas, revisar rutinas en la nube (/schedule) y lo que ya cubre el plan; Angel no gasta en infra
 - [Mod claude-chat-bubbles](project_claude_chat_bubbles.md) — Repo público de Angel (fork de theme-studio, v0.1.8): cómo publicar y las reglas del motor de mods en escritorio
+- [Repo claude-config](project_claude_config_repo.md) — ~/.claude es repo privado; cada cambio de config: fila en la bitácora del README, patch si es fork, commit y push
 - [Menú, no veto, al evaluar skills](feedback_menu_no_veto.md) — Dar opciones con preview y que Angel elija; criterio = prueba de 2 semanas; fase 2 = orquestador + skills por intención
 - [VendingHubPTY sin empresa aún](project_vendinghub_empresa_pendiente.md) — Proyecto personal; la sociedad se constituye al lanzar. No aplicar a Claude Startups como empresa hasta constituirla
