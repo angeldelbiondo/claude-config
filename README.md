@@ -36,16 +36,17 @@ La documentación detallada (por qué se decidió cada cosa) vive en el vault de
 - **Ocultas de la lista para liberar espacio** (`disable-model-invocation: true`): design-dna, design-motion, court, marketing-research, reddit-arctic-shift, obsidian-second-brain y design-research. Se usan con `/nombre` o desde su intención.
 - **En prueba hasta el 2026-11-04:** discernment-nudge, grill-me/grilling, interview-me, doubt-driven-development, frontend-design, taste-skill, diagram-design, last30days, research, diagnosing-bugs, verification-before-completion, webapp-testing, handoff, humanizer y doc-coauthoring. Las que no se usen se borran.
 
-## Restaurar en una máquina nueva
+## Restaurar en una máquina nueva u otra PC
 
-1. Instalar Claude Code.
-2. Clonar este repo en `~/.claude`.
-3. `powershell -ExecutionPolicy Bypass -File restore.ps1` (clona y parchea los dos forks).
-4. Reinstalar los plugins desde la app. La lista está en `enabledPlugins` de `settings.json`.
-5. Crear lo que vive fuera de `~/.claude`:
-   - `~/.config/last30days/.env` con `AGENTCOOKIE=off`, para que last30days nunca lea cookies del navegador.
-   - `~/.config/obsidian-second-brain/.env` con las claves que hagan falta. **No se versiona.**
-   - El vault: `C:\Users\angel\Documents\Obsidian Vault` (tiene su propio respaldo).
+Guía paso a paso, pensada para que la siga una sesión de Claude Code en esa PC: **[SETUP-OTRA-PC.md](SETUP-OTRA-PC.md)**.
+
+En corto:
+1. Respaldar el `~/.claude` que ya exista.
+2. Traer este repo encima, sin borrar el login.
+3. Correr `restore.ps1`. Corrige las rutas si el usuario de Windows es otro, clona los forks, crea el `.env` de last30days e instala los plugins.
+4. Poner el vault en `Documents\Obsidian Vault`.
+
+Lo único que no viaja: `~/.config/obsidian-second-brain/.env`, con las claves que hagan falta. **No se versiona.**
 
 ## Bitácora
 
@@ -63,6 +64,7 @@ La documentación detallada (por qué se decidió cada cosa) vive en el vault de
 | 2026-10-22 | Recuento en una sesión nueva: 157 skills, 0 sin descripción. Las skills de intención resuelven los duplicados (obsidian-vault, deep-research, schedule, diagram-design) |
 | 2026-10-22 | `ruta.py` ignora el texto pegado (`<pasted_content>`): un reporte pegado ya no dispara intenciones falsas |
 | 2026-10-22 | `firmas-canario.py` muestra al final de cada turno qué skills y subagentes se usaron. Lo arma el hook, no Claude. Doble check de todo: 66 chequeos OK |
+| 2026-10-22 | Listo para otra PC: `restore.ps1` corrige rutas, avisa si falta el vault, clona los forks solo si faltan, crea el `.env` de last30days e instala los plugins. Guía `SETUP-OTRA-PC.md`. Probado en una carpeta aparte simulando otro usuario |
 
 ## Detalle en el vault
 
