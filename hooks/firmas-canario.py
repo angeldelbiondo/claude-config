@@ -5,6 +5,8 @@
 #  2. Skills y plugins usados en el turno: su nombre tiene que aparecer en el texto (línea "⚙️ /nombre").
 #  3. Notas del vault leídas con Read: su nombre tiene que aparecer en el texto (línea "📓 (nombre)").
 #  Si falta 2 o 3, bloquea UNA vez para que Claude agregue la línea (stop_hook_active corta el bucle).
+#  4. Reporte para Angel (systemMessage): qué skills, skills leídas como archivo y subagentes o workflows se
+#     usaron en el turno. Lo arma el hook, no Claude, así que no depende de que Claude se acuerde.
 # Nunca rompe: ante cualquier error sale con 0 y sin salida.
 import csv, datetime, json, re, sys, unicodedata
 from pathlib import Path
@@ -49,7 +51,7 @@ def main():
         return  # ya bloqueamos una vez en este turno
     activo, turno = leer(data["transcript_path"])
 
-    textos, skills, notas, contexto = [], [], [], 0
+    textos, skills, notas, leidas, agentes, contexto = [], [], [], [], [], 0
     for r in turno:
         m = r.get("message", {})
         u = m.get("usage") or {}
@@ -64,11 +66,19 @@ def main():
                     skills.append(inp["skill"].split(":")[-1])
                 elif n.startswith("mcp__plugin_"):
                     skills.append(n.split("__")[1].split("_")[1])  # mcp__plugin_<plugin>_<server>__<tool>
+                elif n in ("Agent", "Task"):
+                    tipo = inp.get("subagent_type") or "general-purpose"
+                    agentes.append(f"{tipo} ({inp['description']})" if inp.get("description") else tipo)
+                elif n == "Workflow":
+                    m_ = re.search(r"name:\s*['\"]([^'\"]+)", str(inp.get("script", "")))
+                    agentes.append("workflow " + (inp.get("name") or (m_.group(1) if m_ else "")).strip())
                 elif n == "Read":
                     p = str(inp.get("file_path", ""))
-                    if "obsidian vault" in p.replace("\\", "/").lower() and p.lower().endswith(".md") \
-                            and Path(p).name.lower() not in OPERATIVAS:
+                    q = p.replace("\\", "/").lower()
+                    if "obsidian vault" in q and q.endswith(".md") and Path(p).name.lower() not in OPERATIVAS:
                         notas.append(Path(p).stem)
+                    elif m_ := re.search(r"/\.claude/(?:skills/([^/]+)/skill\.md|commands/([^/]+)\.md)$", q):
+                        leidas.append(m_.group(1) or m_.group(2))  # skills ocultas que se usan leyendo su archivo
     # ponytail: las lecturas por Bash (cat, sed) no se detectan; la regla del CLAUDE.md cubre ese caso
 
     texto = nfc("\n".join(textos))
@@ -87,6 +97,13 @@ def main():
         if estado == "muerto" and not previo:
             out["systemMessage"] = (f"🐤 Canario muerto (contexto: {contexto:,} tokens): Claude dejó de empezar con «Angel». "
                                     "La sesión se está degradando: pide el traspaso con /obsidian-save y abre una sesión nueva.")
+
+    unicos = lambda xs: list(dict.fromkeys(xs))
+    partes = [f"{k}: {v}" for k, v in (("skills", ", ".join("/" + s for s in unicos(skills))),
+                                       ("leídas", ", ".join(unicos(leidas))), ("subagentes", ", ".join(unicos(agentes)))) if v]
+    if partes:  # sale en la primera pasada, aunque bloquee: la segunda (stop_hook_active) no repite nada
+        reporte = "🧰 Este turno usé — " + " · ".join(partes)
+        out["systemMessage"] = (out["systemMessage"] + "\n" + reporte) if "systemMessage" in out else reporte
 
     faltan_s = sorted({s for s in skills if nfc(s) not in texto})
     faltan_n = sorted({n for n in notas if nfc(n) not in texto})

@@ -50,7 +50,7 @@ viejo = [prompt("antes"), asis(tool("Read", file_path=V + r"\wiki\Vieja.md"), tx
 # 1. todo en regla: canario vivo, nota citada, skill nombrada
 r = run([REGLA] + viejo + [prompt("hola"), asis(txt("Angel, voy.")), asis(tool("Skill", skill="obsidian-save")),
         asis(tool("Read", file_path=V + r"\wiki\concepts\Nota Uno.md")), asis(txt("Listo. ⚙️ /obsidian-save 📓 (Nota Uno)"))])
-assert r == {}, r
+assert r == {"systemMessage": "🧰 Este turno usé — skills: /obsidian-save"}, r
 
 # 2. faltan firmas y el canario murió: bloquea con la línea exacta y avisa a Angel
 r = run([REGLA, prompt("hola"), asis(txt("Listo, ya está.")),
@@ -62,6 +62,7 @@ r = run([REGLA, prompt("hola"), asis(txt("Listo, ya está.")),
 assert r["decision"] == "block", r
 assert "⚙️ /claude-video-vision · /ponytail-review 📓 (2026-10-17 — Lote)" in r["reason"], r["reason"]
 assert "Canario muerto (contexto: 50,000 tokens)" in r["systemMessage"], r
+assert r["systemMessage"].endswith("🧰 Este turno usé — skills: /claude-video-vision, /ponytail-review"), r  # sale aunque bloquee
 
 # 3. segunda muerte en la misma sesión: ya no repite el aviso (pero sí lo anota)
 r = run([REGLA, prompt("otra"), asis(txt("Sin nombre."))], sid="s2")
@@ -76,4 +77,14 @@ assert r == {} and "s3" not in fc.LOG.read_text(encoding="utf-8"), r
 r = run([REGLA, prompt("hola"), asis(tool("Skill", skill="obsidian-save")), asis(txt("x"))], sid="s4", activo=True)
 assert r == {}, r
 
-print("ok: 5 casos")
+# 6. subagente, workflow y skill oculta leída como archivo: van al reporte; la leída no exige firma
+r = run([prompt("hola"), asis(tool("Agent", subagent_type="Explore", description="buscar hooks")),
+         asis(tool("Agent", description="sin tipo")),
+         asis(tool("Workflow", script="export const meta = {\n  name: 'review-changes', description: 'x' }")),
+         asis(tool("Read", file_path=r"C:\Users\angel\.claude\skills\design-dna\SKILL.md")),
+         asis(tool("Read", file_path=r"C:\Users\angel\.claude\commands\design-research.md")),
+         asis(txt("Listo."))], sid="s6")
+assert r == {"systemMessage": "🧰 Este turno usé — leídas: design-dna, design-research · subagentes: "
+             "Explore (buscar hooks), general-purpose (sin tipo), workflow review-changes"}, r
+
+print("ok: 6 casos")

@@ -27,7 +27,7 @@ La documentación detallada (por qué se decidió cada cosa) vive en el vault de
 | En cada mensaje | `vault-autoconsulta.py` + `ruta.py` | Busca notas del vault relacionadas, recuerda las firmas y sugiere la skill de la intención (`[ruta]`) |
 | Antes de cada comando Bash | `ponytail-precommit.ps1` | Frena el primer `git commit` para correr `/ponytail-review` |
 | Antes de cada comando Bash o PowerShell | `red-sistema-guard.py` | Frena cambios de red o del sistema sin aprobación |
-| Al terminar cada respuesta | `firmas-canario.py` | Revisa el canario ("Angel" al inicio) y que se nombren las skills y las notas usadas |
+| Al terminar cada respuesta | `firmas-canario.py` | Revisa el canario ("Angel" al inicio) y que se nombren las skills y las notas usadas. Además le muestra a Angel qué skills, skills leídas y subagentes se usaron (`🧰 Este turno usé — …`) |
 
 ## Skills: cómo se eligen
 
@@ -62,6 +62,7 @@ La documentación detallada (por qué se decidió cada cosa) vive en el vault de
 | 2026-10-21 (noche) | `skillListingBudgetFraction: 0.02` en `settings.json`: la lista de skills pasa del 1% al 2% del contexto. Respaldo en `backups/settings.json.2026-10-21-pre-budget` |
 | 2026-10-22 | Recuento en una sesión nueva: 157 skills, 0 sin descripción. Las skills de intención resuelven los duplicados (obsidian-vault, deep-research, schedule, diagram-design) |
 | 2026-10-22 | `ruta.py` ignora el texto pegado (`<pasted_content>`): un reporte pegado ya no dispara intenciones falsas |
+| 2026-10-22 | `firmas-canario.py` muestra al final de cada turno qué skills y subagentes se usaron. Lo arma el hook, no Claude. Doble check de todo: 66 chequeos OK |
 
 ## Detalle en el vault
 
