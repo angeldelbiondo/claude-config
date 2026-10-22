@@ -58,6 +58,7 @@ La documentación detallada (por qué se decidió cada cosa) vive en el vault de
 | 2026-10 | Regla de red y sistema: mostrar el comando y esperar el OK. Hook `red-sistema-guard.py` |
 | 2026-10-17 | Canario y firmas (`firmas-canario.py`), sección "Navegación web", skill `court` |
 | 2026-10-21 | 15 skills en prueba por 2 semanas. Orquestador más 9 skills por intención. Línea `[ruta]` en el hook. 7 skills ocultas de la lista. La memoria por proyecto entra al repo |
+| 2026-10-21 (noche) | En una sesión nueva llegaron 77 skills sin descripción. Se recortaron las descripciones de 7 skills de prueba (−3.098 caracteres) |
 
 ## Detalle en el vault
 
