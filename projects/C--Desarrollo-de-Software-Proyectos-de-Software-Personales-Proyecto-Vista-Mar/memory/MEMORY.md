@@ -1,0 +1,2 @@
+- [Autonomía total en Vista Mar](autonomia-total-vista-mar.md) — no mostrar plan, subagentes y skills, crítica sin gasto inútil
+- [Proyecto Vista Mar](vista-mar-proyecto.md) — origen (chat, Claude Docs), repo privado y qué decide la familia
