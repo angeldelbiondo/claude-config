@@ -2,6 +2,7 @@
   "env": {
     "OBSIDIAN_VAULT_PATH": "C:\\Users\\angel\\Documents\\Obsidian Vault"
   },
+  "skillListingBudgetFraction": 0.02,
   "model": "sonnet",
   "attribution": {
     "commit": "",
