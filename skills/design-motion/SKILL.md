@@ -11,6 +11,7 @@ license: MIT
 metadata:
   author: LottieFiles
   version: "1.0.0"
+disable-model-invocation: true
 ---
 
 # Motion Design Skill

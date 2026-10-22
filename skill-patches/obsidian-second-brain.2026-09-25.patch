@@ -1,0 +1,611 @@
+diff --git a/SKILL.md b/SKILL.md
+index 8d71bd3..f135377 100644
+--- a/SKILL.md
++++ b/SKILL.md
+@@ -1,21 +1,23 @@
+ ---
+ name: obsidian-second-brain
+-description: >
+-  Operate any Obsidian vault as a living, self-rewriting second brain (an evolution
+-  of Karpathy's LLM Wiki pattern: sources rewrite existing pages, contradictions
+-  reconcile automatically, scheduled agents maintain the vault while you sleep).
+-  Use this skill whenever
+-  the user asks Claude to read, write, update, search, or manage their Obsidian
+-  vault — including saving notes from conversation, creating daily entries, updating
+-  kanban boards, logging dev work, managing people notes, capturing decisions,
+-  tracking deals, or maintaining any vault structure. Also triggers when the user
+-  wants to bootstrap a new vault from scratch, run a vault health check, or drop
+-  a _CLAUDE.md into their vault so all Claude surfaces share the same operating rules.
+-  Includes a research toolkit (5 commands: /x-read, /x-pulse, /research, /research-deep,
+-  /youtube) for AI-powered research via Grok, Perplexity, and YouTube — findings save
+-  to the vault automatically following the AI-first vault rule. Use proactively whenever
+-  the conversation produces information worth preserving (decisions, people met, projects
+-  started, tasks completed, lessons learned, research findings).
++description: >-
++  Opera cualquier vault de Obsidian como un segundo cerebro vivo que se reescribe solo (una
++  evolucion del patron LLM Wiki de Karpathy: las fuentes reescriben paginas existentes, las
++  contradicciones se reconcilian solas, agentes programados mantienen el vault mientras
++  dormis). Usar este skill cada vez que el usuario le pida a Claude leer, escribir,
++  actualizar, buscar o gestionar su vault de Obsidian — incluyendo guardar notas de una
++  conversacion, crear entradas diarias, actualizar tableros kanban, registrar sesiones de
++  desarrollo, gestionar notas de personas, capturar decisiones, trackear deals, o mantener
++  cualquier estructura del vault. Tambien se activa cuando el usuario quiere arrancar un
++  vault nuevo desde cero, correr un chequeo de salud del vault, o poner un _CLAUDE.md en su
++  vault para que todas las superficies de Claude compartan las mismas reglas de operacion.
++  Incluye un kit de investigacion (5 comandos: /obsidian-x-read, /obsidian-x-pulse,
++  /obsidian-research, /obsidian-research-deep, /obsidian-youtube) para investigacion con IA
++  via Grok, Perplexity y YouTube — los hallazgos se guardan en el vault automaticamente
++  siguiendo la regla AI-first del vault. Usar de forma proactiva cada vez que la
++  conversacion produzca informacion que valga la pena preservar (decisiones, gente que
++  conocio, proyectos que arranco, tareas completadas, lecciones aprendidas, hallazgos de
++  investigacion).
+ ---
+ 
+ # Obsidian Second Brain
+diff --git a/commands/obsidian-adr.md b/commands/obsidian-adr.md
+index e4c6af5..fe7e8ca 100644
+--- a/commands/obsidian-adr.md
++++ b/commands/obsidian-adr.md
+@@ -1,5 +1,7 @@
+ ---
+-description: Generate a decision record when the vault structure changes — the vault knows why it knows what it does
++description: >-
++  Genera un decision record cuando cambia la estructura del vault — asi el vault sabe por
++  que sabe lo que sabe
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-adr $ARGUMENTS`:
+diff --git a/commands/obsidian-board.md b/commands/obsidian-board.md
+index 4cc9c51..9e876a2 100644
+--- a/commands/obsidian-board.md
++++ b/commands/obsidian-board.md
+@@ -1,5 +1,7 @@
+ ---
+-description: Show or update a kanban board — flags overdue items, updates from conversation
++description: >-
++  Muestra o actualiza un tablero kanban — marca items vencidos y lo actualiza desde la
++  conversacion
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-board $ARGUMENTS`:
+diff --git a/commands/obsidian-capture.md b/commands/obsidian-capture.md
+index df1a0a4..53ec689 100644
+--- a/commands/obsidian-capture.md
++++ b/commands/obsidian-capture.md
+@@ -1,5 +1,6 @@
+ ---
+-description: Quick idea capture — zero friction, saves to Ideas/ and mentions in daily note
++description: >-
++  Captura rapida de ideas — sin friccion, guarda en Ideas/ y lo menciona en la nota diaria
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-capture $ARGUMENTS`:
+diff --git a/commands/obsidian-challenge.md b/commands/obsidian-challenge.md
+index 315714c..776cc17 100644
+--- a/commands/obsidian-challenge.md
++++ b/commands/obsidian-challenge.md
+@@ -1,5 +1,7 @@
+ ---
+-description: Red-team your current idea against your own vault history — finds contradictions, past failures, and flawed assumptions
++description: >-
++  Le hace red-team a tu idea actual contra tu propio historial del vault — encuentra
++  contradicciones, fracasos pasados y supuestos con fallas
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-challenge $ARGUMENTS`:
+diff --git a/commands/obsidian-connect.md b/commands/obsidian-connect.md
+index 75f7378..c7b6506 100644
+--- a/commands/obsidian-connect.md
++++ b/commands/obsidian-connect.md
+@@ -1,5 +1,7 @@
+ ---
+-description: Bridge two unrelated domains using your vault's link graph — forces creative friction to spark new ideas
++description: >-
++  Conecta dos dominios sin relacion usando el grafo de links del vault — fuerza friccion
++  creativa para generar ideas nuevas
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-connect $ARGUMENTS`:
+diff --git a/commands/obsidian-daily.md b/commands/obsidian-daily.md
+index 45fa0c4..b7d876b 100644
+--- a/commands/obsidian-daily.md
++++ b/commands/obsidian-daily.md
+@@ -1,5 +1,7 @@
+ ---
+-description: Create or update today's daily note — pulls calendar events, overdue tasks, and conversation context
++description: >-
++  Crea o actualiza la nota diaria de hoy — trae eventos de calendario, tareas vencidas y
++  contexto de la conversacion
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-daily`:
+diff --git a/commands/obsidian-decide.md b/commands/obsidian-decide.md
+index 743ff9e..8d622a1 100644
+--- a/commands/obsidian-decide.md
++++ b/commands/obsidian-decide.md
+@@ -1,5 +1,7 @@
+ ---
+-description: Extract decisions from this conversation and log them to the right project notes
++description: >-
++  Extrae decisiones de esta conversacion y las registra en las notas de proyecto
++  correspondientes
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-decide $ARGUMENTS`:
+diff --git a/commands/obsidian-emerge.md b/commands/obsidian-emerge.md
+index c2d6061..0380a90 100644
+--- a/commands/obsidian-emerge.md
++++ b/commands/obsidian-emerge.md
+@@ -1,5 +1,7 @@
+ ---
+-description: Surface unnamed patterns from your recent notes — recurring themes, hidden connections, and conclusions you haven't explicitly stated
++description: >-
++  Saca a la superficie patrones sin nombrar de tus notas recientes — temas recurrentes,
++  conexiones ocultas y conclusiones que no dijiste explicitamente
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-emerge $ARGUMENTS`:
+diff --git a/commands/obsidian-export.md b/commands/obsidian-export.md
+index 6541e77..473584c 100644
+--- a/commands/obsidian-export.md
++++ b/commands/obsidian-export.md
+@@ -1,5 +1,7 @@
+ ---
+-description: Export a clean structured snapshot of the vault that any agent or tool can consume — flat JSON or markdown index
++description: >-
++  Exporta una foto estructurada y limpia del vault que cualquier agente o herramienta puede
++  consumir — JSON plano o indice en markdown
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-export $ARGUMENTS`:
+diff --git a/commands/obsidian-find.md b/commands/obsidian-find.md
+index 64d9e7f..4b895fc 100644
+--- a/commands/obsidian-find.md
++++ b/commands/obsidian-find.md
+@@ -1,5 +1,7 @@
+ ---
+-description: Smart vault search — returns results with context, not just filenames
++description: >-
++  Busqueda inteligente del vault — devuelve resultados con contexto, no solo nombres de
++  archivo
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-find $ARGUMENTS`:
+diff --git a/commands/obsidian-graduate.md b/commands/obsidian-graduate.md
+index 8e2f94c..d0700b6 100644
+--- a/commands/obsidian-graduate.md
++++ b/commands/obsidian-graduate.md
+@@ -1,5 +1,7 @@
+ ---
+-description: Promote an idea fragment into a full project spec with tasks, board entries, and structure
++description: >-
++  Promueve un fragmento de idea a una spec de proyecto completa, con tareas, entradas de
++  tablero y estructura
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-graduate $ARGUMENTS`:
+diff --git a/commands/obsidian-health.md b/commands/obsidian-health.md
+index b227916..38cb7c6 100644
+--- a/commands/obsidian-health.md
++++ b/commands/obsidian-health.md
+@@ -1,5 +1,7 @@
+ ---
+-description: Run a vault health check — grouped by severity, detects contradictions, concept gaps, stale claims, and structural issues
++description: >-
++  Corre un chequeo de salud del vault — agrupado por severidad, detecta contradicciones,
++  vacios de conceptos, afirmaciones desactualizadas y problemas estructurales
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-health`:
+diff --git a/commands/obsidian-ingest.md b/commands/obsidian-ingest.md
+index 2fc1d57..f3e22ad 100644
+--- a/commands/obsidian-ingest.md
++++ b/commands/obsidian-ingest.md
+@@ -1,5 +1,8 @@
+ ---
+-description: Ingest a source into the vault — the vault rewrites itself around new knowledge. Every ingest updates entities, rewrites stale claims, synthesizes new concepts, and resolves contradictions.
++description: >-
++  Ingiere una fuente al vault — el vault se reescribe solo alrededor del conocimiento nuevo.
++  Cada ingesta actualiza entidades, reescribe afirmaciones desactualizadas, sintetiza
++  conceptos nuevos y resuelve contradicciones.
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-ingest $ARGUMENTS`:
+diff --git a/commands/obsidian-init.md b/commands/obsidian-init.md
+index 1ea98a4..e17e846 100644
+--- a/commands/obsidian-init.md
++++ b/commands/obsidian-init.md
+@@ -1,5 +1,6 @@
+ ---
+-description: Scan your vault and generate a _CLAUDE.md operating manual, index.md catalog, and log.md
++description: >-
++  Escanea tu vault y genera un manual operativo _CLAUDE.md, un catalogo index.md y un log.md
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-init`:
+diff --git a/commands/obsidian-learn.md b/commands/obsidian-learn.md
+index 21f224d..072cdcc 100644
+--- a/commands/obsidian-learn.md
++++ b/commands/obsidian-learn.md
+@@ -1,5 +1,7 @@
+ ---
+-description: Review vault learnings, prune stale ones, surface active patterns — the vault's lessons compound or expire
++description: >-
++  Revisa los aprendizajes del vault, poda los desactualizados, saca a la luz patrones
++  activos — las lecciones del vault se acumulan o vencen
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-learn $ARGUMENTS`:
+diff --git a/commands/obsidian-log.md b/commands/obsidian-log.md
+index a0a6434..2d7b3f5 100644
+--- a/commands/obsidian-log.md
++++ b/commands/obsidian-log.md
+@@ -1,5 +1,7 @@
+ ---
+-description: Log this work or dev session to the vault — infers project from context
++description: >-
++  Registra esta sesion de trabajo o desarrollo en el vault — infiere el proyecto por
++  contexto
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-log`:
+diff --git a/commands/obsidian-person.md b/commands/obsidian-person.md
+index 9a6ddbd..1bbde7d 100644
+--- a/commands/obsidian-person.md
++++ b/commands/obsidian-person.md
+@@ -1,5 +1,6 @@
+ ---
+-description: Create or update a person note from conversation context
++description: >-
++  Crea o actualiza una nota de persona a partir del contexto de la conversacion
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-person $ARGUMENTS`:
+diff --git a/commands/obsidian-project.md b/commands/obsidian-project.md
+index 1fc2246..57fabf7 100644
+--- a/commands/obsidian-project.md
++++ b/commands/obsidian-project.md
+@@ -1,5 +1,7 @@
+ ---
+-description: Create or update a project note — adds to board and daily note automatically
++description: >-
++  Crea o actualiza una nota de proyecto — la suma al tablero y a la nota diaria
++  automaticamente
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-project $ARGUMENTS`:
+diff --git a/commands/obsidian-recap.md b/commands/obsidian-recap.md
+index 6acd945..af776c9 100644
+--- a/commands/obsidian-recap.md
++++ b/commands/obsidian-recap.md
+@@ -1,5 +1,6 @@
+ ---
+-description: Summarize a time period from the vault — today, week, or month
++description: >-
++  Resume un periodo de tiempo del vault — hoy, la semana o el mes
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-recap $ARGUMENTS`:
+diff --git a/commands/obsidian-reconcile.md b/commands/obsidian-reconcile.md
+index 02be13a..6de7485 100644
+--- a/commands/obsidian-reconcile.md
++++ b/commands/obsidian-reconcile.md
+@@ -1,5 +1,6 @@
+ ---
+-description: Find and resolve contradictions in the vault — the vault maintains its own truth
++description: >-
++  Encuentra y resuelve contradicciones en el vault — el vault mantiene su propia verdad
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-reconcile $ARGUMENTS`:
+diff --git a/commands/research-deep.md b/commands/obsidian-research-deep.md
+similarity index 90%
+rename from commands/research-deep.md
+rename to commands/obsidian-research-deep.md
+index 5950d89..4e345f9 100644
+--- a/commands/research-deep.md
++++ b/commands/obsidian-research-deep.md
+@@ -1,8 +1,11 @@
+ ---
+-description: Vault-first deep research — scans vault, identifies gaps, fills via Perplexity + Grok, synthesizes a delta, then propagates updates across people/projects/ideas via /obsidian-save
++description: >-
++  Investigación profunda vault-first — escanea el vault, identifica vacíos, los llena vía
++  Perplexity + Grok, sintetiza un delta y después propaga las actualizaciones a
++  personas/proyectos/ideas vía /obsidian-save
+ ---
+ 
+-Use the obsidian-second-brain skill. Execute `/research-deep [topic]`:
++Use the obsidian-second-brain skill. Execute `/obsidian-research-deep [topic]`:
+ 
+ 1. Resolve the topic from the user's argument. If no topic, ask: "What topic for deep research?"
+ 
+diff --git a/commands/research.md b/commands/obsidian-research.md
+similarity index 75%
+rename from commands/research.md
+rename to commands/obsidian-research.md
+index e122999..3ad6bca 100644
+--- a/commands/research.md
++++ b/commands/obsidian-research.md
+@@ -1,8 +1,10 @@
+ ---
+-description: Web research with citations via Perplexity Sonar — deep dossier with summary, facts, timeline, players, contrarian views, open questions
++description: >-
++  Investigación web con citas vía Perplexity Sonar — dossier profundo con resumen, datos,
++  cronología, actores, visiones contrarias y preguntas abiertas
+ ---
+ 
+-Use the obsidian-second-brain skill. Execute `/research [topic]`:
++Use the obsidian-second-brain skill. Execute `/obsidian-research [topic]`:
+ 
+ 1. Resolve the topic from the user's argument. Multi-word topics fine ("AI memory tools", "vector databases for RAG"). If no topic, ask: "What topic should I research?"
+ 
+@@ -17,9 +19,9 @@ Use the obsidian-second-brain skill. Execute `/research [topic]`:
+ 
+ 5. After the dossier prints, surface the saved file path on stderr cleanly to the user.
+ 
+-6. Plain English triggers: "research [topic]", "look up [topic]", "deep research on [topic]" (note: "do deep research" or "research deep" should route to `/research-deep` instead — the chained version), "find me info on [topic]".
++6. Plain English triggers: "research [topic]", "look up [topic]", "deep research on [topic]" (note: "do deep research" or "research deep" should route to `/obsidian-research-deep` instead — the chained version), "find me info on [topic]".
+ 
+-7. If the user wants ALSO X discourse on the same topic, suggest running `/x-pulse [topic]` after this. If they want full vault-aware synthesis with propagation, suggest `/research-deep [topic]`.
++7. If the user wants ALSO X discourse on the same topic, suggest running `/obsidian-x-pulse [topic]` after this. If they want full vault-aware synthesis with propagation, suggest `/obsidian-research-deep [topic]`.
+ 
+ 8. Errors handled inside the script with auto-retry on transient failures. Surface fatal errors verbatim.
+ 
+diff --git a/commands/obsidian-review.md b/commands/obsidian-review.md
+index d378b4c..a3e219f 100644
+--- a/commands/obsidian-review.md
++++ b/commands/obsidian-review.md
+@@ -1,5 +1,7 @@
+ ---
+-description: Generate a structured weekly or monthly review note from vault history
++description: >-
++  Genera una nota de revision semanal o mensual estructurada a partir del historial del
++  vault
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-review $ARGUMENTS`:
+diff --git a/commands/obsidian-save.md b/commands/obsidian-save.md
+index a4616d6..8767193 100644
+--- a/commands/obsidian-save.md
++++ b/commands/obsidian-save.md
+@@ -1,5 +1,6 @@
+ ---
+-description: Save everything worth keeping from this conversation to the vault
++description: >-
++  Guarda en el vault todo lo que valga la pena conservar de esta conversacion
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-save`:
+diff --git a/commands/obsidian-synthesize.md b/commands/obsidian-synthesize.md
+index eb5d555..6e01cfd 100644
+--- a/commands/obsidian-synthesize.md
++++ b/commands/obsidian-synthesize.md
+@@ -1,5 +1,7 @@
+ ---
+-description: Automatic synthesis — scans the vault for unnamed patterns and writes synthesis pages without being asked
++description: >-
++  Sintesis automatica — escanea el vault en busca de patrones sin nombrar y escribe paginas
++  de sintesis sin que se lo pidan
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-synthesize`:
+diff --git a/commands/obsidian-task.md b/commands/obsidian-task.md
+index b831745..2452a41 100644
+--- a/commands/obsidian-task.md
++++ b/commands/obsidian-task.md
+@@ -1,5 +1,6 @@
+ ---
+-description: Add a task to the right kanban board with inferred priority and due date
++description: >-
++  Agrega una tarea al tablero kanban correspondiente, con prioridad y fecha limite inferidas
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-task $ARGUMENTS`:
+diff --git a/commands/obsidian-visualize.md b/commands/obsidian-visualize.md
+index ec08c4d..31472ff 100644
+--- a/commands/obsidian-visualize.md
++++ b/commands/obsidian-visualize.md
+@@ -1,5 +1,7 @@
+ ---
+-description: Generate a visual canvas map of your vault — see the shape of your second brain and how knowledge connects
++description: >-
++  Genera un mapa visual (canvas) de tu vault — para ver la forma de tu segundo cerebro y
++  como se conecta el conocimiento
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-visualize $ARGUMENTS`:
+diff --git a/commands/obsidian-world.md b/commands/obsidian-world.md
+index d4111cf..64cbd43 100644
+--- a/commands/obsidian-world.md
++++ b/commands/obsidian-world.md
+@@ -1,5 +1,7 @@
+ ---
+-description: Load your identity, values, priorities, and current state in one shot — with progressive context levels to avoid burning tokens
++description: >-
++  Carga tu identidad, valores, prioridades y estado actual de una sola vez — con niveles de
++  contexto progresivos para no quemar tokens
+ ---
+ 
+ Use the obsidian-second-brain skill. Execute `/obsidian-world`:
+diff --git a/commands/x-pulse.md b/commands/obsidian-x-pulse.md
+similarity index 84%
+rename from commands/x-pulse.md
+rename to commands/obsidian-x-pulse.md
+index 7cf0841..4b2042b 100644
+--- a/commands/x-pulse.md
++++ b/commands/obsidian-x-pulse.md
+@@ -1,8 +1,10 @@
+ ---
+-description: Scan X for what's trending in a topic — themes, voices, hooks, and post ideas powered by Grok + Live Search
++description: >-
++  Escanea X para ver qué está en tendencia sobre un tema — temas, voces, ganchos e ideas de
++  posteos, con Grok + Live Search
+ ---
+ 
+-Use the obsidian-second-brain skill. Execute `/x-pulse [topic]`:
++Use the obsidian-second-brain skill. Execute `/obsidian-x-pulse [topic]`:
+ 
+ 1. Resolve the topic from the user's argument. Multi-word topics are fine ("AI automation", "vibe coding"). If no topic was given, ask: "What topic should I scan X for?"
+ 
+@@ -19,7 +21,7 @@ Use the obsidian-second-brain skill. Execute `/x-pulse [topic]`:
+ 
+ 6. Plain English triggers that route to this command: "what's hot on X about [topic]", "X pulse on [topic]", "what should I post about [topic] today", "scan X for [topic]", "trends on X about [topic]".
+ 
+-7. If the script reports "No active discourse found in last 72h on this topic", offer to either broaden the topic or try `/research [topic]` instead (Perplexity for general web research).
++7. If the script reports "No active discourse found in last 72h on this topic", offer to either broaden the topic or try `/obsidian-research [topic]` instead (Perplexity for general web research).
+ 
+ 8. If the script fails with a clear error, surface it verbatim. Auto-retry on transient errors is handled inside the script.
+ 
+diff --git a/commands/x-read.md b/commands/obsidian-x-read.md
+similarity index 89%
+rename from commands/x-read.md
+rename to commands/obsidian-x-read.md
+index 4bb0591..8d53c5a 100644
+--- a/commands/x-read.md
++++ b/commands/obsidian-x-read.md
+@@ -1,8 +1,10 @@
+ ---
+-description: Deep-read an X (Twitter) post via Grok + Live Search — verbatim post, thread, TL;DR, claims, reply sentiment, voices to watch
++description: >-
++  Lectura profunda de un post de X (Twitter) vía Grok + Live Search — post textual, hilo,
++  TL;DR, afirmaciones, sentimiento de las respuestas y voces a seguir
+ ---
+ 
+-Use the obsidian-second-brain skill. Execute `/x-read [url]`:
++Use the obsidian-second-brain skill. Execute `/obsidian-x-read [url]`:
+ 
+ 1. Resolve the URL from the user's argument. If no URL was given, ask: "Which X post URL?" Accept any URL containing `x.com/` or `twitter.com/`.
+ 
+diff --git a/commands/youtube.md b/commands/obsidian-youtube.md
+similarity index 88%
+rename from commands/youtube.md
+rename to commands/obsidian-youtube.md
+index dd5155b..7648775 100644
+--- a/commands/youtube.md
++++ b/commands/obsidian-youtube.md
+@@ -1,8 +1,10 @@
+ ---
+-description: Extract transcript, metadata, and top comments from a YouTube video — summarized via Grok and saved to vault
++description: >-
++  Extrae transcripción, metadata y los comentarios top de un video de YouTube — resumido vía
++  Grok y guardado en el vault
+ ---
+ 
+-Use the obsidian-second-brain skill. Execute `/youtube [url]`:
++Use the obsidian-second-brain skill. Execute `/obsidian-youtube [url]`:
+ 
+ 1. Resolve the YouTube URL or video ID from the user's argument. Accept any of: full URL (`https://www.youtube.com/watch?v=...`), `https://youtu.be/...`, `https://www.youtube.com/shorts/...`, or just the 11-character video ID. If no input given, ask: "Which YouTube video?"
+ 
+@@ -25,7 +27,7 @@ Use the obsidian-second-brain skill. Execute `/youtube [url]`:
+ 
+ 7. If the video has no captions (transcript unavailable) AND no metadata (no API key), the script will fail with a clear message — surface it. Suggest the user picks a different video or provides metadata manually.
+ 
+-8. If the user asks to research something mentioned in the "Worth Following Up On" section, route that to `/research [topic]`.
++8. If the user asks to research something mentioned in the "Worth Following Up On" section, route that to `/obsidian-research [topic]`.
+ 
+ ---
+ 
+diff --git a/scripts/research/lib/config.py b/scripts/research/lib/config.py
+index d1f0e2a..3ff4ad7 100644
+--- a/scripts/research/lib/config.py
++++ b/scripts/research/lib/config.py
+@@ -33,5 +33,8 @@ GROK_MODEL = get_optional("GROK_MODEL", "grok-4")
+ PERPLEXITY_RESEARCH_MODEL = get_optional("PERPLEXITY_RESEARCH_MODEL", "sonar-pro")
+ PERPLEXITY_DEEP_MODEL = get_optional("PERPLEXITY_DEEP_MODEL", "sonar-deep-research")
+ 
+-VAULT_PATH = Path.home() / "Projects" / "personal" / "obsinian" / "Eugeniu's Vault"
++# Fork local (2026-09-23): el original tenia escrito a mano el vault de su autor
++# ("Eugeniu's Vault") y lo CREABA si no existia, asi que las notas iban a parar a
++# una carpeta fantasma. Ahora sale del .env, con el vault de Angel por defecto.
++VAULT_PATH = Path(get_optional("OBSIDIAN_VAULT_PATH", str(Path.home() / "Documents" / "Obsidian Vault")))
+ USAGE_LOG = Path.home() / ".research-toolkit" / "usage.log"
+diff --git a/scripts/research/lib/usage.py b/scripts/research/lib/usage.py
+index b3651e5..f98ada9 100644
+--- a/scripts/research/lib/usage.py
++++ b/scripts/research/lib/usage.py
+@@ -7,7 +7,11 @@ import json
+ from .config import USAGE_LOG
+ 
+ # Pricing per 1M tokens (as of 2026-04, https://docs.x.ai/docs/models)
++# 2026-09-23: agregados los modelos vigentes. Ojo: esto no incluye el cargo de
++# x_search, que se cobra aparte a US$5 cada 1.000 posts leidos.
+ GROK_PRICING = {
++    "grok-4.7": {"input": 2.00, "output": 6.00},
++    "grok-4.3": {"input": 1.25, "output": 2.50},
+     "grok-4.20-reasoning": {"input": 3.00, "output": 15.00},
+     "grok-4": {"input": 3.00, "output": 15.00},
+     "grok-3": {"input": 2.00, "output": 10.00},
+diff --git a/scripts/research/lib/youtube.py b/scripts/research/lib/youtube.py
+index 3b958b6..08d019d 100644
+--- a/scripts/research/lib/youtube.py
++++ b/scripts/research/lib/youtube.py
+@@ -32,7 +32,7 @@ def get_transcript(video_id: str) -> str | None:
+         return None
+     try:
+         api = YouTubeTranscriptApi()
+-        fetched = api.fetch(video_id)
++        fetched = api.fetch(video_id, languages=["en", "es", "pt", "fr"])
+         return " ".join(seg.text for seg in fetched.snippets if seg.text).strip()
+     except Exception as e:
+         print(f"[YouTube transcript unavailable: {type(e).__name__}: {e}]")
+diff --git a/scripts/research/youtube_extract.py b/scripts/research/youtube_extract.py
+index cca9a0e..0a384d6 100644
+--- a/scripts/research/youtube_extract.py
++++ b/scripts/research/youtube_extract.py
+@@ -9,6 +9,7 @@ Then summarizes via Grok (cheap call, no live_search).
+ Default behavior: print to chat AND save AI-first note to Research/YouTube/.
+ """
+ 
++import os
+ import sys
+ from datetime import datetime
+ from .lib import youtube, grok, vault
+@@ -80,6 +81,26 @@ def main(argv: list[str]) -> int:
+     channel = (metadata or {}).get("channel") or "(unknown channel)"
+     published = (metadata or {}).get("published_at") or "(unknown date)"
+ 
++    if not os.environ.get("XAI_API_KEY", "").strip():
++        # No Grok key configured — skip Grok summarization instead of failing.
++        # Dump the raw material; the calling Claude summarizes it directly and
++        # saves the vault note itself (same AI-first shape, just no Grok call).
++        print(f"# {title}")
++        print(f"**Channel:** {channel} · **Published:** {published}")
++        print(f"**URL:** https://www.youtube.com/watch?v={video_id}\n")
++        print("## Transcript\n")
++        print(transcript or "(transcript not available)")
++        if comments:
++            print("\n## Top comments\n")
++            for c in comments[:15]:
++                print(f"- {c['author']} ({c['like_count']} \U0001F44D): {c['text'][:200]}")
++        print(
++            "\n---\n[XAI_API_KEY not set — no Grok summarization. Claude: summarize this transcript "
++            "yourself per the AI-first rule and save to Research/YouTube/ (see lib/vault.py write_note).]",
++            file=sys.stderr,
++        )
++        return 0
++
+     if transcript:
+         TX_LIMIT = 24000  # ~6k tokens — plenty for grok-4 context
+         tx_truncated = transcript[:TX_LIMIT]
+diff --git a/uv.lock b/uv.lock
+index 36c480f..615f08d 100644
+--- a/uv.lock
++++ b/uv.lock
+@@ -317,7 +317,7 @@ name = "exceptiongroup"
+ version = "1.3.1"
+ source = { registry = "https://pypi.org/simple" }
+ dependencies = [
+-    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
++    { name = "typing-extensions" },
+ ]
+ sdist = { url = "https://files.pythonhosted.org/packages/50/79/66800aadf48771f6b62f7eb014e352e5d06856655206165d775e675a02c9/exceptiongroup-1.3.1.tar.gz", hash = "sha256:8b412432c6055b0b7d14c310000ae93352ed6754f70fa8f7c34141f91c4e3219", size = 30371, upload-time = "2025-11-21T23:01:54.787Z" }
+ wheels = [
+@@ -557,7 +557,7 @@ wheels = [
+ 
+ [[package]]
+ name = "obsidian-second-brain-research"
+-version = "0.1.0"
++version = "0.6.0"
+ source = { virtual = "." }
+ dependencies = [
+     { name = "google-api-python-client" },

@@ -12,6 +12,7 @@ description: >-
   "tokens de diseno desde referencia", "generar diseno desde JSON", "sistema de diseno desde
   screenshot", "perfil de diseno", "JSON de guia de estilo", "analisis de efectos visuales",
   "diseno con efectos", "analisis de diseno 3d".
+disable-model-invocation: true
 ---
 
 # Design DNA

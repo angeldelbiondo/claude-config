@@ -3,6 +3,10 @@
     "OBSIDIAN_VAULT_PATH": "C:\\Users\\angel\\Documents\\Obsidian Vault"
   },
   "model": "sonnet",
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
   "hooks": {
     "PreToolUse": [
       {
@@ -14,6 +18,18 @@
             "shell": "powershell",
             "timeout": 15,
             "statusMessage": "Ponytail pre-commit check"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"C:\\Users\\angel\\.claude\\hooks\\red-sistema-guard.py\"",
+            "shell": "powershell",
+            "timeout": 10,
+            "statusMessage": "Revisando si el comando toca red o sistema"
           }
         ]
       }
@@ -44,15 +60,35 @@
           }
         ]
       }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"C:\\Users\\angel\\.claude\\hooks\\firmas-canario.py\"",
+            "shell": "powershell",
+            "timeout": 10,
+            "statusMessage": "Revisando firmas y canario"
+          }
+        ]
+      }
     ]
   },
   "enableWorkflows": true,
+  "statusLine": {
+    "type": "command",
+    "command": "powershell -ExecutionPolicy Bypass -File \"C:\\Users\\angel\\.claude\\plugins\\cache\\ponytail\\ponytail\\4.6.0\\hooks\\ponytail-statusline.ps1\""
+  },
   "enabledPlugins": {
     "ponytail@ponytail": true,
     "claude-video-vision@claude-video-vision": true,
     "security-guidance@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
-    "gsap-skills@gsap-skills": true
+    "gsap-skills@gsap-skills": true,
+    "burn-meter@claude-code-mods": true,
+    "agent-narrator@claude-code-mods": true,
+    "chat-bubbles@claude-chat-bubbles": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
@@ -84,11 +120,22 @@
         "source": "git",
         "url": "https://github.com/greensock/gsap-skills.git"
       }
+    },
+    "claude-code-mods": {
+      "source": {
+        "source": "github",
+        "repo": "OneWave-AI/claude-code-mods"
+      }
+    },
+    "claude-chat-bubbles": {
+      "source": {
+        "source": "github",
+        "repo": "angeldelbiondo/claude-chat-bubbles"
+      }
     }
   },
   "outputStyle": "Proactive",
   "autoUpdatesChannel": "latest",
-  "skipWorkflowUsageWarning": true,
   "theme": "dark",
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true

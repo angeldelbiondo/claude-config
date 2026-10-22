@@ -1,0 +1,5 @@
+- [Sophia / IA LOCAL project](project_ia_local_sophia.md) — local AI agent architecture, current status, points to brain_storming.md as source of truth
+- [Log every experiment](feedback_log_experiments.md) — Angel's confirmed preference: document real test results immediately, never re-run blindly
+- [Verify rendering claims against expected values](feedback_verify_rendering_claims.md) — self-correction after shipping a broken orb verified only via "no errors", not correct output
+- [No self-marketing copy](feedback_no_self_marketing.md) — don't put "sales"/feature-selling text in Angel's own tools; he built them, functional text only
+- [Avoid trial-and-error](feedback_avoid_trial_error.md) — reason through the full change upfront, batch edits, verify once; don't iterate live via repeated restart-verify cycles

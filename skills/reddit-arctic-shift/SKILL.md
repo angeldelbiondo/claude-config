@@ -2,6 +2,7 @@
 name: reddit-arctic-shift
 description: "Leer hilos y comentarios de Reddit cuando el acceso directo está bloqueado. Usar SIEMPRE que haga falta leer un hilo de Reddit, buscar discusiones reales de usuarios sobre un tema, o cuando WebFetch devuelva 'unable to fetch from reddit.com'. Reddit está bloqueado por política tanto en WebFetch como en el navegador — esta es la vía que sí funciona. Se dispara con: leer reddit, hilo de reddit, qué dice la gente en reddit, buscar en r/algún_subreddit, experiencias reales de usuarios."
 allowed-tools: Bash
+disable-model-invocation: true
 ---
 
 # Leer Reddit vía Arctic Shift
@@ -108,6 +109,12 @@ Seis agentes minando en paralelo gastaron 557.000 tokens y devolvieron **cero re
 4. **Hay temas que no viven en Reddit.** r/Hyperliquid devolvió 2 posts sobre funding y **cero** comentarios sobre su vault HLP: esa comunidad está en X y Discord. **Antes de minar, preguntarse si el tema tiene foro en Reddit**; si no, la fuente es otra
 
 Y una causa que no es de Reddit: cada agente arranca en frío y, por la regla de inicio del CLAUDE.md, **se pone a releer el vault antes de buscar**. El rescate encontró que la mayor parte del texto "útil" era nuestro propio vault.
+
+## ⚠️ Enlaces cortos de compartir (`/r/sub/s/XXXX`)
+
+Solo Reddit los resuelve, y su antibots devuelve **403 "Blocked"** (`Server: snooserv`). **No intentar saltárselo** (cambiar el User-Agent o usar proxies es evadir detección de bots). Lo que funciona (2026-09-25):
+1. Pedirle a Angel el **título** del post (su app lo muestra traducido; buscar por palabras clave en inglés).
+2. `posts/search?subreddit=X&title=<palabra>` o `&query=<palabra>` en Arctic Shift. El índice se atrasa ~1-2 h con los posts muy nuevos.
 
 ## Cómo usarlo bien
 

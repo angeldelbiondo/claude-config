@@ -2,24 +2,30 @@
 .credentials.json
 mcp-needs-auth-cache.json
 
-# Datos de sesión — efímeros, no útiles para restaurar
-projects/
+# Datos de sesión — efímeros, no útiles para restaurar.
+# Excepción: la memoria de Claude por proyecto (projects/<proyecto>/memory/) sí se versiona.
+projects/**
+!projects/*/
+!projects/*/memory/
+!projects/*/memory/**
 tasks/
 telemetry/
 
-# Skills — las que vienen de GitHub se restauran con restore.ps1 (más su patch en skill-patches/).
-# Las que solo existen en esta máquina se versionan acá.
-skills/*
-!skills/design-dna/
-!skills/design-motion/
-!skills/reddit-arctic-shift/
+# Skills — todas se versionan acá, salvo los dos forks de GitHub, que restore.ps1 clona
+# y parchea (skill-patches/). obsidian-second-brain además trae un .venv de 143 MB.
+skills/obsidian-second-brain/
+skills/marketing-research/
 
 # Plugins del marketplace — se reinstalan desde la UI de Claude Code
 plugins/
 
-# Generados automáticamente por Claude Code
-commands/
+# Generados o efímeros
 cache/
+debug/
+state/
+dev-mods/
+hooks/logs/
+settings.json.bak*
 backups/
 sessions/
 shell-snapshots/

@@ -2,10 +2,10 @@ diff --git a/marketing-research/SKILL.md b/SKILL.md
 similarity index 91%
 rename from marketing-research/SKILL.md
 rename to SKILL.md
-index 37ce188..d77ddd5 100644
+index 37ce188..8b97f31 100644
 --- a/marketing-research/SKILL.md
 +++ b/SKILL.md
-@@ -1,14 +1,18 @@
+@@ -1,14 +1,19 @@
  ---
  name: marketing-research
 -description: >
@@ -30,6 +30,7 @@ index 37ce188..d77ddd5 100644
 +  email, o cualquier contenido enfocado en persuasion. Si el usuario dice "ayudame a
 +  entender mi mercado", "necesito definir mi mensaje", "quien es mi cliente", o "que hace
 +  diferente a mi producto", este skill aplica de inmediato.
++disable-model-invocation: true
  ---
  
  # Marketing Research Sourcebook

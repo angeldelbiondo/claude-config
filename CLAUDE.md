@@ -7,7 +7,7 @@ Aplican a todos los proyectos. Cada regla lleva su porqué en una línea. Los in
 - Español neutro (tú). También en el código y la UI de sus proyectos, con léxico panameño.
 - Directo, sin preámbulos ni relleno.
 - Tablas y bullets antes que párrafos; code blocks para lo técnico.
-- Al usar una skill, nombrar el comando (`/obsidian-save`, etc.) para que Angel las vaya aprendiendo.
+- **Firma de skills:** antes de usar una skill, un comando o la herramienta de un plugin, una línea `⚙️ /nombre — para qué`, para que Angel las vaya aprendiendo. El hook `firmas-canario.py` (Stop) revisa que el nombre aparezca en la respuesta y, si falta, pide la línea.
 
 ## Git y configuración
 
@@ -29,7 +29,7 @@ Ruta: `C:\Users\angel\Documents\Obsidian Vault\`, operado con la skill `obsidian
 
 - En la primera respuesta de la sesión, una línea diciendo qué contexto se cargó.
 - No consultar el vault para small talk ni comandos del sistema.
-- Al responder con una nota del vault, citarla al final: `(nombre-del-archivo)`.
+- **Firma del vault:** toda nota que leas en el turno se cita al final, en una línea `📓 (nombre-del-archivo)`. El mismo hook lo revisa.
 
 ### Mantenerlo vivo (escribir no es usar: el ciclo se cierra leyendo)
 
@@ -61,6 +61,11 @@ El patrón a evitar: reportar un resultado con entusiasmo y encontrar la falla e
 - Separar calidad (%, Sharpe: no dependen del capital) de escala (dólares). No concluir "no sirve" porque da pocos dólares sobre un capital chico.
 - Corregir el Sharpe de una serie autocorrelacionada (Lo, 2002) antes de reportarlo. Un Sharpe mayor a 3 en un backtest es señal de bug.
 
+## Canario
+
+- Empieza cada respuesta con la palabra Angel (ej.: «Angel, ya quedó…»): el primer texto de cada turno, aunque vaya antes de las herramientas. Es la única excepción a «sin preámbulos» y vale solo en el chat, nunca en archivos, commits ni mensajes a terceros.
+- Por qué: una sesión larga no se rompe de golpe; primero se salta una instrucción chica y después empieza a inventar. Si la palabra falta, `firmas-canario.py` le avisa a Angel que toca traspaso (`/obsidian-save`) y sesión nueva, y anota el tamaño de contexto en `~/.claude/hooks/logs/canario.csv`. Ningún hook recuerda esta regla, a propósito: si se reforzara, dejaría de medir.
+
 ## Agentes y orquestación
 
 - Un panel o debate de agentes hereda las premisas de quien lo arma. Antes de lanzarlo, escribir las premisas y pedirle a un agente que ataque las premisas, no solo las conclusiones.
@@ -76,7 +81,21 @@ El patrón a evitar: reportar un resultado con entusiasmo y encontrar la falla e
 - `/obsidian-research` y `/obsidian-research-deep` dependen de la API de chat de Perplexity, que cierra el 2026-09-27.
 - El crudo va a `raw/videos/YYYY-MM-DD — Título.md` (inmutable); lo destilado, a `wiki/concepts/`, `wiki/entities/` o `wiki/projects/`.
 
-## Research previo automático
+## Navegación web
 
-- **UI** (pantalla, componente, layout, crítica de un screenshot): correr `/design-research` antes de proponer, y leer la nota del proyecto en `wiki/projects/` si existe. Sin anunciar el research. No aplica a backend, refactor ni configuración.
-- **Negocio** (mercado, competidores, cliente ideal, posicionamiento, copy): `/marketing-research`, y guardar el resultado con `/obsidian-save`.
+El fallo típico no es "no poder entrar" sino perder el dato: WebFetch le pasa la página a un modelo chico que resume, y corta a los 100.000 caracteres.
+
+- Pregunta puntual sobre una página → WebFetch. Si avisa que la página se cortó, seguir con `offset`: nunca dar por ausente lo que no se leyó.
+- Dato exacto, tabla, lista o página con JavaScript → navegador integrado: `get_page_text`, o `javascript_tool` para extraer por selector.
+- Catálogo o muchas páginas → script de Python que guarde CSV/JSON (requests + parser; Scrapling como librería si hace falta JavaScript en lote).
+- Sitio donde Angel tiene sesión → Claude in Chrome. Reddit → leer `~/.claude/skills/reddit-arctic-shift/SKILL.md`. Anti-bot o CAPTCHA → no se fuerza: avisar.
+- Antes de cerrar una búsqueda, releer el pedido original y decir qué parte quedó sin cubrir.
+
+## Skills: ruteo por intención
+
+- Antes de trabajar, elegir la skill de la intención: `diseno`, `investigar`, `decidir`, `construir`, `depurar`, `revisar`, `recordar`, `escribir`, `datos`. Cada una sabe qué skills específicas usar.
+- Si el pedido mezcla intenciones, es grande, gasta subagentes o es difícil de deshacer: `orquestar`, que muestra el plan antes de ejecutar.
+- El hook de autoconsulta agrega una línea `[ruta]` cuando reconoce la intención. Es una pista por palabras: si no aplica, se ignora.
+- Algunas skills están fuera de la lista para liberar espacio (design-dna, design-motion, design-research, court, marketing-research, reddit-arctic-shift, obsidian-second-brain): se usan leyendo su archivo, como indica la skill de su intención.
+- **UI:** `diseno` corre design-research antes de proponer y lee la nota del proyecto en `wiki/projects/` si existe. No aplica a backend, refactor ni configuración.
+- **Negocio** (mercado, competidores, cliente ideal, posicionamiento, copy): `investigar` → marketing-research, y guardar el resultado con `/obsidian-save`.

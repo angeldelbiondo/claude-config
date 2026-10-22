@@ -92,13 +92,26 @@ def buscar(prompt):
     return ranking[:MAX_NOTAS]
 
 
-def main():
-    ranking = buscar(json.loads(sys.stdin.buffer.read().decode("utf-8")).get("prompt", ""))
-    if not ranking:
-        return
+try:
+    from ruta import ruta  # noqa: E402  (mismo directorio: Python lo agrega al path al correr el script)
+except Exception:
+    ruta = lambda prompt: ""  # ponytail: si ruta.py se rompe, el hook sigue con la autoconsulta sola
 
-    lineas = ["[autoconsulta del vault] Notas que podrían tener apuntes sobre este mensaje "
-              "(búsqueda por palabras). Abrir las que apliquen antes de responder; ignorar el resto."]
+# Recordatorio por turno de las firmas del CLAUDE.md (firmas-canario.py las revisa al final).
+# El canario NO va acá, a propósito: si se recordara en cada turno, dejaría de medir la degradación.
+FIRMAS = ("[firmas] Antes de usar una skill, un comando o un plugin: línea `⚙️ /nombre — para qué`. "
+          "Cada nota del vault que leas: cítala al final con `📓 (nombre-del-archivo)`.")
+
+
+def main():
+    prompt = json.loads(sys.stdin.buffer.read().decode("utf-8")).get("prompt", "")
+    ranking = buscar(prompt)
+    lineas = [FIRMAS]
+    if r := ruta(prompt):  # pista de skill por intención; ver ruta.py
+        lineas.append(r)
+    if ranking:
+        lineas.append("[autoconsulta del vault] Notas que podrían tener apuntes sobre este mensaje "
+                      "(búsqueda por palabras). Abrir las que apliquen antes de responder; ignorar el resto.")
     for s, rel, d, hits in ranking:
         d = re.sub(r"\[\[([^\]|]+)(\|[^\]]*)?\]\]", r"\1", d)
         d = (d[:160] + "…") if len(d) > 160 else d

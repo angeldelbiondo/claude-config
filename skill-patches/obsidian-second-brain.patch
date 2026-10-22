@@ -1,8 +1,8 @@
 diff --git a/SKILL.md b/SKILL.md
-index 8d71bd3..f135377 100644
+index 8d71bd3..bffb0ea 100644
 --- a/SKILL.md
 +++ b/SKILL.md
-@@ -1,21 +1,23 @@
+@@ -1,21 +1,24 @@
  ---
  name: obsidian-second-brain
 -description: >
@@ -39,6 +39,7 @@ index 8d71bd3..f135377 100644
 +  conversacion produzca informacion que valga la pena preservar (decisiones, gente que
 +  conocio, proyectos que arranco, tareas completadas, lecciones aprendidas, hallazgos de
 +  investigacion).
++disable-model-invocation: true
  ---
  
  # Obsidian Second Brain
@@ -298,59 +299,6 @@ index 02be13a..6de7485 100644
  ---
  
  Use the obsidian-second-brain skill. Execute `/obsidian-reconcile $ARGUMENTS`:
-diff --git a/commands/research-deep.md b/commands/obsidian-research-deep.md
-similarity index 90%
-rename from commands/research-deep.md
-rename to commands/obsidian-research-deep.md
-index 5950d89..4e345f9 100644
---- a/commands/research-deep.md
-+++ b/commands/obsidian-research-deep.md
-@@ -1,8 +1,11 @@
- ---
--description: Vault-first deep research — scans vault, identifies gaps, fills via Perplexity + Grok, synthesizes a delta, then propagates updates across people/projects/ideas via /obsidian-save
-+description: >-
-+  Investigación profunda vault-first — escanea el vault, identifica vacíos, los llena vía
-+  Perplexity + Grok, sintetiza un delta y después propaga las actualizaciones a
-+  personas/proyectos/ideas vía /obsidian-save
- ---
- 
--Use the obsidian-second-brain skill. Execute `/research-deep [topic]`:
-+Use the obsidian-second-brain skill. Execute `/obsidian-research-deep [topic]`:
- 
- 1. Resolve the topic from the user's argument. If no topic, ask: "What topic for deep research?"
- 
-diff --git a/commands/research.md b/commands/obsidian-research.md
-similarity index 75%
-rename from commands/research.md
-rename to commands/obsidian-research.md
-index e122999..3ad6bca 100644
---- a/commands/research.md
-+++ b/commands/obsidian-research.md
-@@ -1,8 +1,10 @@
- ---
--description: Web research with citations via Perplexity Sonar — deep dossier with summary, facts, timeline, players, contrarian views, open questions
-+description: >-
-+  Investigación web con citas vía Perplexity Sonar — dossier profundo con resumen, datos,
-+  cronología, actores, visiones contrarias y preguntas abiertas
- ---
- 
--Use the obsidian-second-brain skill. Execute `/research [topic]`:
-+Use the obsidian-second-brain skill. Execute `/obsidian-research [topic]`:
- 
- 1. Resolve the topic from the user's argument. Multi-word topics fine ("AI memory tools", "vector databases for RAG"). If no topic, ask: "What topic should I research?"
- 
-@@ -17,9 +19,9 @@ Use the obsidian-second-brain skill. Execute `/research [topic]`:
- 
- 5. After the dossier prints, surface the saved file path on stderr cleanly to the user.
- 
--6. Plain English triggers: "research [topic]", "look up [topic]", "deep research on [topic]" (note: "do deep research" or "research deep" should route to `/research-deep` instead — the chained version), "find me info on [topic]".
-+6. Plain English triggers: "research [topic]", "look up [topic]", "deep research on [topic]" (note: "do deep research" or "research deep" should route to `/obsidian-research-deep` instead — the chained version), "find me info on [topic]".
- 
--7. If the user wants ALSO X discourse on the same topic, suggest running `/x-pulse [topic]` after this. If they want full vault-aware synthesis with propagation, suggest `/research-deep [topic]`.
-+7. If the user wants ALSO X discourse on the same topic, suggest running `/obsidian-x-pulse [topic]` after this. If they want full vault-aware synthesis with propagation, suggest `/obsidian-research-deep [topic]`.
- 
- 8. Errors handled inside the script with auto-retry on transient failures. Surface fatal errors verbatim.
- 
 diff --git a/commands/obsidian-review.md b/commands/obsidian-review.md
 index d378b4c..a3e219f 100644
 --- a/commands/obsidian-review.md
@@ -427,84 +375,197 @@ index d4111cf..64cbd43 100644
  ---
  
  Use the obsidian-second-brain skill. Execute `/obsidian-world`:
-diff --git a/commands/x-pulse.md b/commands/obsidian-x-pulse.md
-similarity index 84%
-rename from commands/x-pulse.md
-rename to commands/obsidian-x-pulse.md
-index 7cf0841..4b2042b 100644
+diff --git a/commands/research-deep.md b/commands/research-deep.md
+deleted file mode 100644
+index 5950d89..0000000
+--- a/commands/research-deep.md
++++ /dev/null
+@@ -1,44 +0,0 @@
+----
+-description: Vault-first deep research — scans vault, identifies gaps, fills via Perplexity + Grok, synthesizes a delta, then propagates updates across people/projects/ideas via /obsidian-save
+----
+-
+-Use the obsidian-second-brain skill. Execute `/research-deep [topic]`:
+-
+-1. Resolve the topic from the user's argument. If no topic, ask: "What topic for deep research?"
+-
+-2. Run the Python command from the repo root (`~/Projects/personal/obsidian-second-brain/`):
+-   ```bash
+-   uv run -m scripts.research.research_deep "<topic>"
+-   ```
+-
+-3. The script runs a 4-phase pipeline:
+-   - **Phase 1** — vault scan: finds existing notes mentioning the topic (the baseline).
+-   - **Phase 2** — gap analysis: Perplexity sonar-pro identifies what's missing/stale and emits 3-5 targeted queries (each tagged `web` or `x`).
+-   - **Phase 3** — gap-fill: runs each query via Perplexity (web) or Grok+Live Search (X discourse).
+-   - **Phase 4** — synthesis: Perplexity sonar-deep-research produces a delta report (what's new, what's confirmed, contradictions, recommended vault updates, open questions).
+-
+-   Show the synthesis body to the user verbatim.
+-
+-4. **Save behavior: saves AND propagates.**
+-   - The script writes the synthesis to `Research/Deep/YYYY-MM-DD — <slug>.md` automatically (AI-first format).
+-   - Then it emits a JSON payload between `<<<RESEARCH_DEEP_PROPAGATION_PAYLOAD>>>` markers describing what to propagate.
+-
+-5. **After the script finishes, do the propagation step:**
+-   - Parse the JSON payload from the script output.
+-   - Read the saved research note at `vault_baseline_notes` paths and the new research note path.
+-   - Treat the synthesis body as the "conversation context" input to `/obsidian-save`.
+-   - Run the standard `/obsidian-save` flow: spawn parallel subagents (People, Projects, Tasks, Decisions, Ideas) and update vault notes per the synthesis's "Recommended Vault Updates" bullets.
+-   - Apply the AI-first vault rule on every note created or updated (preamble, frontmatter, recency markers, wikilinks, sources).
+-   - Link the new research note from today's daily note.
+-
+-6. After propagation: report back to the user a clean list — "Updated [[X]], created [[Y]], linked [[Z]] from today's daily note."
+-
+-7. Plain English triggers: "do deep research on [topic]", "research properly [topic]", "vault-aware research on [topic]", "research and update the vault on [topic]".
+-
+-8. If any phase fails (e.g. Grok unavailable), the script continues with what it has and flags the gap in the synthesis. Surface partial results — don't silently fail. The graceful degradation rule: a partial synthesis is better than no synthesis.
+-
+-9. Cost note: this command makes multiple API calls (Perplexity + Grok). Typical run: $0.20-$0.80 depending on topic depth and gap count. The script logs Grok calls to the usage log automatically.
+-
+----
+-
+-**AI-first rule:** Every note created or updated by this command MUST follow `references/ai-first-rules.md` — `## For future Claude` preamble, rich frontmatter (`type`, `date`, `tags`, `ai-first: true`, plus type-specific fields), recency markers per external claim, mandatory `[[wikilinks]]` for every person/project/concept referenced, sources preserved verbatim with URLs inline, and confidence levels where applicable. The vault is for future-Claude retrieval — not human reading.
+diff --git a/commands/research.md b/commands/research.md
+deleted file mode 100644
+index e122999..0000000
+--- a/commands/research.md
++++ /dev/null
+@@ -1,28 +0,0 @@
+----
+-description: Web research with citations via Perplexity Sonar — deep dossier with summary, facts, timeline, players, contrarian views, open questions
+----
+-
+-Use the obsidian-second-brain skill. Execute `/research [topic]`:
+-
+-1. Resolve the topic from the user's argument. Multi-word topics fine ("AI memory tools", "vector databases for RAG"). If no topic, ask: "What topic should I research?"
+-
+-2. Run the Python command from the repo root (`~/Projects/personal/obsidian-second-brain/`):
+-   ```bash
+-   uv run -m scripts.research.research "<topic>"
+-   ```
+-
+-3. The script returns a deep dossier (Summary, Key Facts with recency markers, Timeline, Key Players, Contrarian Views, Further Reading, Open Questions, Sources). Show the full output to the user verbatim.
+-
+-4. **Default save behavior: saves automatically.** The script writes an AI-first note to `Research/Web/YYYY-MM-DD — <slug>.md` with full sources list in frontmatter. Appends to `log.md`.
+-
+-5. After the dossier prints, surface the saved file path on stderr cleanly to the user.
+-
+-6. Plain English triggers: "research [topic]", "look up [topic]", "deep research on [topic]" (note: "do deep research" or "research deep" should route to `/research-deep` instead — the chained version), "find me info on [topic]".
+-
+-7. If the user wants ALSO X discourse on the same topic, suggest running `/x-pulse [topic]` after this. If they want full vault-aware synthesis with propagation, suggest `/research-deep [topic]`.
+-
+-8. Errors handled inside the script with auto-retry on transient failures. Surface fatal errors verbatim.
+-
+----
+-
+-**AI-first rule:** Every note created or updated by this command MUST follow `references/ai-first-rules.md` — `## For future Claude` preamble, rich frontmatter (`type`, `date`, `tags`, `ai-first: true`, plus type-specific fields), recency markers per external claim, mandatory `[[wikilinks]]` for every person/project/concept referenced, sources preserved verbatim with URLs inline, and confidence levels where applicable. The vault is for future-Claude retrieval — not human reading.
+diff --git a/commands/x-pulse.md b/commands/x-pulse.md
+deleted file mode 100644
+index 7cf0841..0000000
 --- a/commands/x-pulse.md
-+++ b/commands/obsidian-x-pulse.md
-@@ -1,8 +1,10 @@
- ---
++++ /dev/null
+@@ -1,28 +0,0 @@
+----
 -description: Scan X for what's trending in a topic — themes, voices, hooks, and post ideas powered by Grok + Live Search
-+description: >-
-+  Escanea X para ver qué está en tendencia sobre un tema — temas, voces, ganchos e ideas de
-+  posteos, con Grok + Live Search
- ---
- 
+----
+-
 -Use the obsidian-second-brain skill. Execute `/x-pulse [topic]`:
-+Use the obsidian-second-brain skill. Execute `/obsidian-x-pulse [topic]`:
- 
- 1. Resolve the topic from the user's argument. Multi-word topics are fine ("AI automation", "vibe coding"). If no topic was given, ask: "What topic should I scan X for?"
- 
-@@ -19,7 +21,7 @@ Use the obsidian-second-brain skill. Execute `/x-pulse [topic]`:
- 
- 6. Plain English triggers that route to this command: "what's hot on X about [topic]", "X pulse on [topic]", "what should I post about [topic] today", "scan X for [topic]", "trends on X about [topic]".
- 
+-
+-1. Resolve the topic from the user's argument. Multi-word topics are fine ("AI automation", "vibe coding"). If no topic was given, ask: "What topic should I scan X for?"
+-
+-2. Run the Python command from the repo root (`~/Projects/personal/obsidian-second-brain/`):
+-   ```bash
+-   uv run -m scripts.research.x_pulse "<topic>"
+-   ```
+-
+-3. The script returns a structured pulse: WHAT'S HOT (themes with rep posts + voices), WHAT'S UNDEREXPLORED (gaps), HOOKS THAT ARE WORKING, VOICE & TONE WORKING, POST IDEAS FOR YOU TODAY. Show the full output to the user verbatim.
+-
+-4. **Default save behavior: saves automatically.** The script writes an AI-first note to `Research/X-pulse/YYYY-MM-DD — <slug>.md` with the AI-first vault rule applied (preamble, frontmatter, recency markers, sources verbatim). It also appends a one-line entry to `log.md`.
+-
+-5. After printing, mention to the user the file path that was saved (the script prints this on stderr, surface it cleanly).
+-
+-6. Plain English triggers that route to this command: "what's hot on X about [topic]", "X pulse on [topic]", "what should I post about [topic] today", "scan X for [topic]", "trends on X about [topic]".
+-
 -7. If the script reports "No active discourse found in last 72h on this topic", offer to either broaden the topic or try `/research [topic]` instead (Perplexity for general web research).
-+7. If the script reports "No active discourse found in last 72h on this topic", offer to either broaden the topic or try `/obsidian-research [topic]` instead (Perplexity for general web research).
- 
- 8. If the script fails with a clear error, surface it verbatim. Auto-retry on transient errors is handled inside the script.
- 
-diff --git a/commands/x-read.md b/commands/obsidian-x-read.md
-similarity index 89%
-rename from commands/x-read.md
-rename to commands/obsidian-x-read.md
-index 4bb0591..8d53c5a 100644
+-
+-8. If the script fails with a clear error, surface it verbatim. Auto-retry on transient errors is handled inside the script.
+-
+----
+-
+-**AI-first rule:** Every note created or updated by this command MUST follow `references/ai-first-rules.md` — `## For future Claude` preamble, rich frontmatter (`type`, `date`, `tags`, `ai-first: true`, plus type-specific fields), recency markers per external claim, mandatory `[[wikilinks]]` for every person/project/concept referenced, sources preserved verbatim with URLs inline, and confidence levels where applicable. The vault is for future-Claude retrieval — not human reading.
+diff --git a/commands/x-read.md b/commands/x-read.md
+deleted file mode 100644
+index 4bb0591..0000000
 --- a/commands/x-read.md
-+++ b/commands/obsidian-x-read.md
-@@ -1,8 +1,10 @@
- ---
++++ /dev/null
+@@ -1,29 +0,0 @@
+----
 -description: Deep-read an X (Twitter) post via Grok + Live Search — verbatim post, thread, TL;DR, claims, reply sentiment, voices to watch
-+description: >-
-+  Lectura profunda de un post de X (Twitter) vía Grok + Live Search — post textual, hilo,
-+  TL;DR, afirmaciones, sentimiento de las respuestas y voces a seguir
- ---
- 
+----
+-
 -Use the obsidian-second-brain skill. Execute `/x-read [url]`:
-+Use the obsidian-second-brain skill. Execute `/obsidian-x-read [url]`:
- 
- 1. Resolve the URL from the user's argument. If no URL was given, ask: "Which X post URL?" Accept any URL containing `x.com/` or `twitter.com/`.
- 
-diff --git a/commands/youtube.md b/commands/obsidian-youtube.md
-similarity index 88%
-rename from commands/youtube.md
-rename to commands/obsidian-youtube.md
-index dd5155b..7648775 100644
+-
+-1. Resolve the URL from the user's argument. If no URL was given, ask: "Which X post URL?" Accept any URL containing `x.com/` or `twitter.com/`.
+-
+-2. Run the Python command from the repo root (`~/Projects/personal/obsidian-second-brain/`):
+-   ```bash
+-   uv run -m scripts.research.x_read "<url>"
+-   ```
+-
+-3. The script prints a structured analysis (ORIGINAL POST, THREAD, TL;DR, KEY CLAIMS, REPLY SENTIMENT, NOTABLE COUNTER-ARGUMENTS, VOICES TO WATCH) and a one-line cost summary on stderr. Show the analysis to the user verbatim — don't paraphrase or summarize.
+-
+-4. **Default save behavior: chat only.** Do NOT save the analysis to the vault automatically. The user must ask explicitly ("save this", "save to vault", "/obsidian-save") for it to be archived.
+-
+-5. If the user asks to save: write an AI-first note to `Research/X-reads/YYYY-MM-DD — <slug>.md` in the vault, following the AI-first vault rule (Section 0 of `_CLAUDE.md`):
+-   - Frontmatter: `date`, `time`, `type: x-read`, `post-url`, `post-author` (if known), `key-claims` (list), `tags`, `related-people` (wikilinks for any @ handles that map to known people in the vault), `cost-usd`
+-   - Body starts with **For future Claude:** preamble (2-3 sentences summarizing what this post is about and why it was saved)
+-   - Then the full structured analysis from the script
+-
+-6. Plain English triggers that route to this command: "read this tweet", "read this X post", "what's in this tweet", "analyze this X link" — when followed by a URL.
+-
+-7. If the script fails with a clear error (missing key, network down), surface the error message verbatim. The script handles retry on transient errors automatically.
+-
+----
+-
+-**AI-first rule:** Every note created or updated by this command MUST follow `references/ai-first-rules.md` — `## For future Claude` preamble, rich frontmatter (`type`, `date`, `tags`, `ai-first: true`, plus type-specific fields), recency markers per external claim, mandatory `[[wikilinks]]` for every person/project/concept referenced, sources preserved verbatim with URLs inline, and confidence levels where applicable. The vault is for future-Claude retrieval — not human reading.
+diff --git a/commands/youtube.md b/commands/youtube.md
+deleted file mode 100644
+index dd5155b..0000000
 --- a/commands/youtube.md
-+++ b/commands/obsidian-youtube.md
-@@ -1,8 +1,10 @@
- ---
++++ /dev/null
+@@ -1,32 +0,0 @@
+----
 -description: Extract transcript, metadata, and top comments from a YouTube video — summarized via Grok and saved to vault
-+description: >-
-+  Extrae transcripción, metadata y los comentarios top de un video de YouTube — resumido vía
-+  Grok y guardado en el vault
- ---
- 
+----
+-
 -Use the obsidian-second-brain skill. Execute `/youtube [url]`:
-+Use the obsidian-second-brain skill. Execute `/obsidian-youtube [url]`:
- 
- 1. Resolve the YouTube URL or video ID from the user's argument. Accept any of: full URL (`https://www.youtube.com/watch?v=...`), `https://youtu.be/...`, `https://www.youtube.com/shorts/...`, or just the 11-character video ID. If no input given, ask: "Which YouTube video?"
- 
-@@ -25,7 +27,7 @@ Use the obsidian-second-brain skill. Execute `/youtube [url]`:
- 
- 7. If the video has no captions (transcript unavailable) AND no metadata (no API key), the script will fail with a clear message — surface it. Suggest the user picks a different video or provides metadata manually.
- 
+-
+-1. Resolve the YouTube URL or video ID from the user's argument. Accept any of: full URL (`https://www.youtube.com/watch?v=...`), `https://youtu.be/...`, `https://www.youtube.com/shorts/...`, or just the 11-character video ID. If no input given, ask: "Which YouTube video?"
+-
+-2. Run the Python command from the repo root (`~/Projects/personal/obsidian-second-brain/`):
+-   ```bash
+-   uv run -m scripts.research.youtube_extract "<url-or-id>"
+-   ```
+-
+-3. The script:
+-   - Extracts the transcript via `youtube-transcript-api` (free, no API key).
+-   - If `YOUTUBE_API_KEY` is set, also fetches title, channel, view/like counts, top comments. Otherwise skips metadata silently.
+-   - Sends the transcript (and optional comments) to Grok for AI-first summarization.
+-   - Returns: TL;DR, Key Points, Notable Quotes, Themes & Topics, Comment Sentiment, Worth Following Up On.
+-
+-4. Show the script output verbatim to the user.
+-
+-5. **Default save behavior: saves automatically.** AI-first note written to `Research/YouTube/YYYY-MM-DD — <video-title-slug>.md`. Frontmatter includes video ID, channel, view counts, etc. for future Dataview queries.
+-
+-6. Plain English triggers: "summarize this YouTube video", "what's in this video", "extract this YouTube link", "transcribe this video", or just pasting a YouTube URL with a question about content.
+-
+-7. If the video has no captions (transcript unavailable) AND no metadata (no API key), the script will fail with a clear message — surface it. Suggest the user picks a different video or provides metadata manually.
+-
 -8. If the user asks to research something mentioned in the "Worth Following Up On" section, route that to `/research [topic]`.
-+8. If the user asks to research something mentioned in the "Worth Following Up On" section, route that to `/obsidian-research [topic]`.
- 
- ---
- 
+-
+----
+-
+-**AI-first rule:** Every note created or updated by this command MUST follow `references/ai-first-rules.md` — `## For future Claude` preamble, rich frontmatter (`type`, `date`, `tags`, `ai-first: true`, plus type-specific fields), recency markers per external claim, mandatory `[[wikilinks]]` for every person/project/concept referenced, sources preserved verbatim with URLs inline, and confidence levels where applicable. The vault is for future-Claude retrieval — not human reading.
 diff --git a/scripts/research/lib/config.py b/scripts/research/lib/config.py
 index d1f0e2a..3ff4ad7 100644
 --- a/scripts/research/lib/config.py
