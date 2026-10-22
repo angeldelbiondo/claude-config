@@ -12,12 +12,13 @@ INTENCIONES = {
   "datos":     r"excel|\bcsv\b|\bsql\b|\bgraficos?\b|dashboard|power ?bi|\.pbix|estadistic|backtest|sharpe",
 }
 PAT = {k: re.compile(v) for k, v in INTENCIONES.items()}
+PEGADO = re.compile(r"<pasted_content[^>]*>.*?</pasted_content[^>]*>", re.S)
 
 def norm(s):
     return unicodedata.normalize("NFKD", s.lower()).encode("ascii", "ignore").decode()
 
 def ruta(prompt):
-    p = norm(prompt)
+    p = norm(PEGADO.sub(" ", prompt))  # lo pegado (reportes, logs) no es el pedido de Angel
     hits = [k for k, rx in PAT.items() if rx.search(p)]
     if not hits: return ""
     if len(hits) > 2: return "[ruta] Pedido con varias intenciones (" + ", ".join(hits) + "): usar la skill `orquestar` y mostrar el plan antes."
@@ -34,4 +35,7 @@ if __name__ == "__main__":
     assert "datos" not in ruta("no puedo poner manualmente mi grafica externa")  # gráfica = GPU en Panamá
     assert ruta("tengo conectado el cable ethernet pero no lo detecta").count("depurar") and "construir" not in ruta("tengo conectado el cable ethernet pero no lo detecta")
     assert "datos" in ruta("hazme un grafico de las ventas")
+    reporte = 'esto fue lo que me dijo:\n\n<pasted_content id="760f">\nrevisa la lista, investiga el repo, el dashboard de datos y guarda en el vault\n</pasted_content id="760f">'
+    assert ruta(reporte) == "", ruta(reporte)  # el 2026-10-22 un reporte pegado disparó 7 intenciones
+    assert "depurar" in ruta('<pasted_content id="a1">log largo</pasted_content id="a1">\nno funciona esto')  # el pedido fuera de la etiqueta sí cuenta
     print("ok")
