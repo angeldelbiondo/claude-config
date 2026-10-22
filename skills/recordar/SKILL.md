@@ -5,6 +5,8 @@ description: Guardar o recuperar algo del vault de Obsidian (el segundo cerebro 
 
 # Recordar
 
+Para el vault se usan los comandos de esta tabla, no `desktop-commander:obsidian-vault` (es de otro plugin y no conoce las reglas de Angel).
+
 Antes de la primera escritura de la sesión: lee `_CLAUDE.md` del vault. Para el manual completo de operación, lee `~/.claude/skills/obsidian-second-brain/SKILL.md`.
 
 | Situación | Comando |

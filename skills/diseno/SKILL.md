@@ -21,7 +21,7 @@ Elige según la situación. Puedes combinar varias, en este orden.
 | Textos de botones, errores, estados vacíos | `design:ux-copy` | Skill |
 | Spec para pasarle a otro dev | `design:design-handoff` | Skill |
 | Diagrama para entender algo | `artifact-diagramming` | Skill (nativa) |
-| Diagrama para mostrarle a otros (sustentación, inversor) | `diagram-design` | Skill (en prueba) |
+| Diagrama para mostrarle a otros (sustentación, inversor) | `diagram-design` | Skill (en prueba). Se pisa con artifact-diagramming: la prueba del 2026-11-04 decide si se queda |
 | Página publicada como artifact | `artifact-design` | Skill (nativa) |
 
 Si en la misma tarea hay que escribir el código, pasa después a `construir`.

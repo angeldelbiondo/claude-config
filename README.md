@@ -60,6 +60,7 @@ La documentación detallada (por qué se decidió cada cosa) vive en el vault de
 | 2026-10-21 | 15 skills en prueba por 2 semanas. Orquestador más 9 skills por intención. Línea `[ruta]` en el hook. 7 skills ocultas de la lista. La memoria por proyecto entra al repo |
 | 2026-10-21 (noche) | En una sesión nueva llegaron 77 skills sin descripción. Se recortaron las descripciones de 7 skills de prueba (−3.098 caracteres) |
 | 2026-10-21 (noche) | `skillListingBudgetFraction: 0.02` en `settings.json`: la lista de skills pasa del 1% al 2% del contexto. Respaldo en `backups/settings.json.2026-10-21-pre-budget` |
+| 2026-10-22 | Recuento en una sesión nueva: 157 skills, 0 sin descripción. Las skills de intención resuelven los duplicados (obsidian-vault, deep-research, schedule, diagram-design) |
 
 ## Detalle en el vault
 

@@ -16,7 +16,7 @@ ponytail ya está activo por hook: lo mínimo que funcione y un chequeo ejecutab
 | Levantar la app para ver el cambio | `run` (y las herramientas de preview) |
 | Documentación de una librería | Context7 (`mcp__context7__*`) |
 | Probar una web local con scripts que se repitan | `webapp-testing` (en prueba); para mirar una vez, el navegador integrado |
-| Algo recurrente o programado | `loop` / `schedule` |
+| Algo recurrente o programado | `loop`, o la `schedule` nativa (no `anthropic-skills:schedule`, que repite lo mismo) |
 | Trabajo largo que no entra en una sesión | `handoff` (`/handoff`) o `/obsidian-save` al cerrar |
 
 Antes de decir "listo":

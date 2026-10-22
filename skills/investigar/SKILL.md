@@ -17,6 +17,7 @@ description: Buscar y traer información. Usar cuando Angel pide investigar, bus
 | Mercado, competidores, cliente ideal, posicionamiento, copy | marketing-research | leer archivo `~/.claude/skills/marketing-research/SKILL.md`; guardar el resultado con `/obsidian-save` |
 | Sector o empresas que cotizan en bolsa | `market-researcher:sector-overview`, `competitive-analysis` | Skill |
 | Algo que puede haber cambiado en el último año | WebSearch | herramienta |
+| Investigación profunda con varios agentes | `anthropic-skills:deep-research` | Solo si Angel lo pide: lanza subagentes. Regla del CLAUDE.md: 3 agentes como máximo, y en secuencia si comparten una API gratis |
 
 Reglas:
 - Para elegir entre WebFetch, el navegador integrado o un script, sigue la sección "Navegación web" del CLAUDE.md global.
